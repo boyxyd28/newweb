@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTP</title>
+
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background: linear-gradient(to bottom, #f9a825, #f57c00);
+}
+
+/* LOADING */
+.loading {
+  text-align:center;
+  margin-top:100px;
+}
+
+/* CONTENT */
+.content {
+  display:none;
+  padding:20px;
+}
+
+.otp-box {
+  display:flex;
+  gap:10px;
+  margin-top:30px;
+}
+
+.otp-box input {
+  width:50px;
+  height:60px;
+  font-size:22px;
+  text-align:center;
+  border:none;
+  border-bottom:2px solid black;
+  background:transparent;
+}
+
+button {
+  width:100%;
+  padding:16px;
+  border-radius:30px;
+  border:none;
+  background:black;
+  color:white;
+  margin-top:30px;
+}
+
+.timer {
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="loading" id="loading">
+  ⏳ Mengirim kode OTP...
+</div>
+
+<div class="content" id="content">
+
+  <h3 id="infoHP"></h3>
+
+  <div class="otp-box">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+  </div>
+
+  <button onclick="verifikasi()">Verifikasi</button>
+
+  <div class="timer">
+    Kirim ulang dalam <span id="count">60</span> detik
+  </div>
+
+</div>
+
+<script>
+
+// nomor HP
+let hp = localStorage.getItem("noHP") || "08xxxx";
+let sensor = hp.replace(/(\d{4})\d+(\d{3})/, "$1**$2");
+
+// loading fake
+setTimeout(() => {
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("content").style.display = "block";
+
+  document.getElementById("infoHP").innerText =
+    "Kode dikirim ke WhatsApp " + sensor;
+
+}, 1500);
+
+// input OTP auto pindah
+const inputs = document.querySelectorAll(".otp-box input");
+
+inputs.forEach((input, i) => {
+  input.addEventListener("input", () => {
+    if(input.value && i < inputs.length - 1){
+      inputs[i+1].focus();
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if(e.key === "Backspace" && !input.value && i > 0){
+      inputs[i-1].focus();
+    }
+  });
+});
+
+// paste OTP
+document.addEventListener("paste", (e) => {
+  let paste = e.clipboardData.getData("text").slice(0,6);
+  inputs.forEach((input, i) => {
+    input.value = paste[i] || "";
+  });
+});
+
+// timer
+let time = 60;
+let interval = setInterval(() => {
+  if
