@@ -1,110 +1,91 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OTP</title>
-
 <style>
+
+/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
 }
 
+/* BACKGROUND JAGO STYLE */
 body {
   height: 100vh;
   background: linear-gradient(to bottom, #f9a825, #f57c00);
   display: flex;
   flex-direction: column;
+  color: black;
 }
 
+/* HEADER */
 .header {
   padding: 20px;
   font-size: 18px;
 }
 
+/* CONTENT */
 .content {
   flex: 1;
   padding: 20px;
 }
 
+/* TITLE */
 h1 {
   font-size: 28px;
 }
 
+/* OTP CONTAINER */
 .otp-box {
   display: flex;
   gap: 10px;
   margin-top: 30px;
+  justify-content: center;
 }
 
+/* INPUT OTP (🔥 UPGRADE DI SINI) */
 .otp-box input {
-  width: 45px;
-  height: 55px;
+  width: 48px;
+  height: 58px;
   text-align: center;
-  font-size: 22px;
+  font-size: 24px;
   border: none;
   border-bottom: 2px solid black;
   background: transparent;
+  transition: all 0.15s ease;
 }
 
+/* SAAT DIISI */
+.otp-box input.filled {
+  transform: scale(1.15);
+  border-bottom: 3px solid black;
+}
+
+/* SAAT FOCUS */
+.otp-box input:focus {
+  outline: none;
+  border-bottom: 3px solid black;
+}
+
+/* BUTTON CONTAINER */
 .btn {
   margin-top: 30px;
 }
 
+/* BUTTON (JAGO STYLE) */
 .btn button {
   width: 100%;
   padding: 16px;
   border-radius: 30px;
   border: none;
-  background: black;
+  background: #ccc; /* awal mati */
   color: white;
   font-size: 18px;
+  transition: 0.2s;
 }
+
+/* BUTTON AKTIF */
+.btn button.active {
+  background: black;
+}
+
 </style>
-</head>
-
-<body>
-
-<div class="header">← Log In</div>
-
-<div class="content">
-
-<h1>Masukkan kode OTP</h1>
-
-<div class="otp-box">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-</div>
-
-<div class="btn">
-  <button id="btn">Verifikasi</button>
-</div>
-
-</div>
-
-<script>
-const inputs = document.querySelectorAll(".otp-box input");
-const btn = document.getElementById("btn");
-
-btn.onclick = () => {
-  let kode = "";
-  inputs.forEach(i => kode += i.value);
-
-  if (kode.length < 6) {
-    alert("Kode belum lengkap");
-    return;
-  }
-
-  window.location.href = "home.html";
-};
-</script>
-
-</body>
-</html>
