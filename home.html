@@ -3,96 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pengajuan Pinjaman</title>
+<title>Dashboard</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial;
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+
+body{
+  background:linear-gradient(to bottom,#f9a825,#f57c00);
+  min-height:100vh;
 }
 
-body {
-  background: linear-gradient(to bottom, #f9a825, #f57c00);
-  padding: 15px;
+/* HEADER APP */
+.header{
+  position:sticky;
+  top:0;
+  background:linear-gradient(to right,#f59e0b,#f97316);
+  color:#fff;
+  padding:16px;
+  z-index:10;
 }
 
-/* HEADER */
-.header {
-  background: linear-gradient(to right, #f59e0b, #f97316);
-  padding: 15px;
-  border-radius: 16px;
-  color: white;
-  margin-bottom: 15px;
+/* CONTENT */
+.content{
+  padding:20px;
+  padding-bottom:100px;
 }
 
-/* CONTAINER */
-.container {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  max-width: 480px;
-  margin: auto;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+/* SALDO CARD */
+.saldo{
+  background:linear-gradient(to right,#f97316,#fb923c);
+  color:white;
+  padding:20px;
+  border-radius:16px;
+  margin-bottom:15px;
 }
 
-/* TITLE */
-.title {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* SECTION */
-.section {
-  margin-top: 20px;
-}
-
-.section h3 {
-  font-size: 14px;
-  background: #fbbf24;
-  padding: 8px;
-  border-radius: 6px;
-  margin-bottom: 10px;
+.saldo h1{
+  font-size:28px;
+  margin-top:5px;
 }
 
 /* INPUT */
-.input-group {
-  margin-bottom: 12px;
+.input-group{
+  margin-bottom:14px;
 }
 
-.input-group label {
-  font-size: 12px;
-  color: #555;
+input,select{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-bottom:2px solid #333;
+  background:transparent;
+  font-size:16px;
 }
 
-.input-group input, select {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  padding: 8px 0;
-  outline: none;
-  font-size: 14px;
+/* BUTTON FIXED */
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  padding:15px;
+  box-shadow:0 -5px 20px rgba(0,0,0,0.1);
 }
 
-/* BUTTON */
-button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 14px;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(to right, #f59e0b, #f97316);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+.footer button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(to right,#f59e0b,#f97316);
+  color:white;
+  font-size:18px;
 }
 
-/* RESULT */
-.result {
-  margin-top: 15px;
-  font-size: 14px;
+/* STATUS */
+.status{
+  margin-top:15px;
+  font-weight:bold;
+}
+
+/* LOADING DOT */
+.loading span{
+  animation: blink 1s infinite;
+}
+@keyframes blink{
+  0%{opacity:0}
+  50%{opacity:1}
+  100%{opacity:0}
 }
 </style>
 </head>
@@ -101,133 +100,110 @@ button {
 
 <!-- HEADER -->
 <div class="header">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <img src="https://i.pravatar.cc/100" style="width:40px; border-radius:50%;">
-      <div>
-        <div style="font-size:12px;">Selamat datang</div>
-        <div style="font-weight:bold;">Nasabah</div>
-      </div>
-    </div>
-    <div onclick="showNotif()" style="cursor:pointer;">🔔</div>
-  </div>
+  <b>Dashboard</b>
 </div>
 
-<!-- FORM -->
-<div class="container">
+<div class="content">
 
-  <div class="title">
-    <h2>Form Pengajuan</h2>
+  <!-- SALDO -->
+  <div class="saldo">
+    <div>Limit Pinjaman</div>
+    <h1 id="saldo">Rp 0</h1>
   </div>
 
-  <!-- DATA -->
-  <div class="section">
-    <h3>Data</h3>
-
-    <div class="input-group">
-      <label>Nama</label>
-      <input id="nama">
-    </div>
-
-    <div class="input-group">
-      <label>NIK</label>
-      <input id="nik">
-    </div>
-
-    <div class="input-group">
-      <label>Pekerjaan</label>
-      <input id="kerja" list="listKerja">
-      <datalist id="listKerja">
-        <option>Polisi</option>
-        <option>Dokter</option>
-        <option>Karyawan</option>
-        <option>Wiraswasta</option>
-        <option>Freelance</option>
-      </datalist>
-    </div>
-
-    <div class="input-group">
-      <label>Penghasilan</label>
-      <input id="gaji">
-    </div>
-
-    <div class="input-group">
-      <label>Pinjaman</label>
-      <input id="pinjam">
-    </div>
-
-    <div class="input-group">
-      <label>Durasi</label>
-      <select id="bulan">
-        <option value="12">1 Tahun</option>
-        <option value="24">2 Tahun</option>
-        <option value="60">5 Tahun</option>
-        <option value="120">10 Tahun</option>
-      </select>
-    </div>
-
+  <!-- FORM -->
+  <div class="input-group">
+    <input id="nama" placeholder="Nama">
   </div>
 
-  <button onclick="proses()">Ajukan</button>
+  <div class="input-group">
+    <input id="nik" placeholder="NIK">
+  </div>
 
-  <div id="hasil" class="result"></div>
+  <div class="input-group">
+    <input id="gaji" placeholder="Penghasilan">
+  </div>
 
+  <div class="input-group">
+    <input id="pinjam" placeholder="Pinjaman">
+  </div>
+
+  <div class="input-group">
+    <select id="bulan">
+      <option value="12">1 Tahun</option>
+      <option value="24">2 Tahun</option>
+      <option value="60">5 Tahun</option>
+      <option value="120">10 Tahun</option>
+    </select>
+  </div>
+
+  <div id="status" class="status"></div>
+
+</div>
+
+<!-- BUTTON BAWAH -->
+<div class="footer">
+  <button id="btn">Ajukan Sekarang</button>
 </div>
 
 <script>
 
-// FORMAT RUPIAH
-function formatRupiah(angka) {
-  return angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-
-function pasangFormat(id) {
-  const input = document.getElementById(id);
-  input.addEventListener("input", function (e) {
-    let angka = e.target.value.replace(/\D/g, "");
-    e.target.value = angka ? formatRupiah(angka) : "";
+// FORMAT UANG
+["gaji","pinjam"].forEach(id=>{
+  document.getElementById(id).addEventListener("input",function(e){
+    let angka=e.target.value.replace(/\D/g,"");
+    e.target.value=angka.replace(/\B(?=(\d{3})+(?!\d))/g,".");
   });
+});
+
+// ANIMASI SALDO
+function animasi(target){
+  let x=0;
+  let el=document.getElementById("saldo");
+
+  let i=setInterval(()=>{
+    x+=target/20;
+    if(x>=target){x=target;clearInterval(i);}
+    el.innerText="Rp "+Math.floor(x).toLocaleString("id-ID");
+  },50);
 }
 
-pasangFormat("gaji");
-pasangFormat("pinjam");
+// PROSES
+document.getElementById("btn").onclick=()=>{
 
-// NOTIF
-function showNotif() {
-  alert("Tidak ada notifikasi");
-}
+  let nama=document.getElementById("nama").value;
+  let nik=document.getElementById("nik").value;
+  let gaji=parseInt(document.getElementById("gaji").value.replace(/\./g,""));
+  let pinjam=parseInt(document.getElementById("pinjam").value.replace(/\./g,""));
+  let bulan=parseInt(document.getElementById("bulan").value);
 
-// PROSES PINJAMAN
-function proses() {
-  const nama = document.getElementById("nama").value.trim();
-  const nik = document.getElementById("nik").value.trim();
-  const gaji = parseInt(document.getElementById("gaji").value.replace(/\./g, ""));
-  const pinjam = parseInt(document.getElementById("pinjam").value.replace(/\./g, ""));
-  const bulan = parseInt(document.getElementById("bulan").value);
-  const hasil = document.getElementById("hasil");
+  let status=document.getElementById("status");
 
-  if (!nama || nik.length < 16 || !gaji || !pinjam || !bulan) {
+  if(!nama || nik.length<16 || !gaji || !pinjam){
     alert("Lengkapi data");
     return;
   }
 
-  hasil.innerHTML = "<b>Status:</b> Sedang memeriksa kelayakan nasabah...";
+  status.innerHTML="Memverifikasi<span>.</span><span>.</span><span>.</span>";
 
-  setTimeout(() => {
-    let limit = gaji * 5;
-    let cicilan = pinjam / bulan;
+  setTimeout(()=>{
+    status.innerHTML="Menganalisa data<span>.</span><span>.</span><span>.</span>";
 
-    let status = "Disetujui";
-    if (pinjam > limit) status = "Ditolak";
+    setTimeout(()=>{
+      let limit=gaji*5;
+      let cicilan=pinjam/bulan;
 
-    hasil.innerHTML = `
-      <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
-      <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
-      <b>Status:</b> ${status}
-    `;
-  }, 2000);
-}
+      animasi(limit);
 
+      status.innerHTML=
+      "Limit: Rp "+limit.toLocaleString("id-ID")+"<br>"+
+      "Cicilan: Rp "+Math.floor(cicilan).toLocaleString("id-ID");
+
+    },1500);
+
+  },1500);
+
+};
 </script>
 
 </body>
