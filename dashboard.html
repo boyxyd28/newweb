@@ -3,118 +3,184 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NIK</title>
+<title>Masukkan NIK</title>
 
 <style>
-
-/* RESET TOTAL */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* FULL SCREEN ORANGE */
-html, body {
-  height: 100%;
-}
-
-body {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
   font-family: Arial, sans-serif;
+}
+
+/* FULL ORANGE BACKGROUND */
+body {
+  height:100vh;
   background: linear-gradient(to bottom, #f9a825, #f57c00);
-  display: flex;
-  flex-direction: column;
+  display:flex;
+  flex-direction:column;
 }
 
 /* HEADER */
 .header {
-  padding: 20px;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  color: black;
+  padding:20px;
+  font-size:18px;
+  display:flex;
+  align-items:center;
 }
 
-/* CONTENT FLEX */
+.header span {
+  margin-left:10px;
+}
+
+/* CONTENT */
 .content {
-  flex: 1;
-  padding: 20px;
+  flex:1;
+  padding:20px;
 }
 
 h1 {
-  margin-top: 20px;
-  font-size: 28px;
+  margin-top:20px;
+  font-size:28px;
 }
 
 p {
-  margin-top: 10px;
-  color: #333;
+  margin-top:10px;
+  color:#333;
 }
 
 /* INPUT STYLE APP */
-.input-line {
-  margin-top: 30px;
+.input-box {
+  margin-top:40px;
 }
 
-.input-line input {
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid black;
-  padding: 10px 0;
-  font-size: 18px;
-  background: transparent;
-  outline: none;
+.input-box input {
+  width:100%;
+  border:none;
+  border-bottom:2px solid black;
+  padding:12px 0;
+  font-size:20px;
+  background:transparent;
+  outline:none;
+  letter-spacing:2px;
 }
 
-/* BUTTON FIX DI BAWAH */
+/* BUTTON FIXED */
 .footer {
-  padding: 20px;
+  padding:20px;
 }
 
 .footer button {
-  width: 100%;
-  padding: 18px;
-  border-radius: 30px;
-  border: none;
-  background: black;
-  color: white;
-  font-size: 18px;
+  width:100%;
+  padding:18px;
+  border-radius:30px;
+  border:none;
+  background:#000;
+  color:white;
+  font-size:18px;
+  opacity:0.4;
+  transition:0.2s;
 }
 
+/* ACTIVE BUTTON */
+.footer button.active {
+  opacity:1;
+}
+
+/* ERROR TEXT */
+.error {
+  margin-top:10px;
+  color:red;
+  font-size:13px;
+}
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  ← Log In
+  ← <span>Log In</span>
 </div>
 
+<!-- CONTENT -->
 <div class="content">
+
   <h1>Masukkan NIK kamu</h1>
   <p>Untuk lanjut, silakan masukkan NIK kamu.</p>
 
-  <div class="input-line">
-    <input type="number" placeholder="16 digit" id="nik">
+  <div class="input-box">
+    <input id="nik" maxlength="16" placeholder="16 digit">
+    <div id="error" class="error"></div>
   </div>
+
 </div>
 
+<!-- BUTTON -->
 <div class="footer">
-  <button onclick="lanjut()">Lanjut</button>
+  <button id="btn">Lanjut</button>
 </div>
 
 <script>
-function lanjut() {
-  const nik = document.getElementById("nik").value;
 
-  if (nik.length < 16) {
-    alert("NIK harus 16 digit");
+let input = document.getElementById("nik");
+let btn = document.getElementById("btn");
+let error = document.getElementById("error");
+
+/* AKTIFKAN BUTTON */
+input.addEventListener("input", function(){
+
+  this.value = this.value.replace(/\D/g,"");
+
+  if(this.value.length === 16){
+    btn.classList.add("active");
+    btn.style.opacity = "1";
+  } else {
+    btn.classList.remove("active");
+    btn.style.opacity = "0.4";
+  }
+
+});
+
+/* VALIDASI LEVEL REAL */
+function validasiNIK(nik){
+
+  if(!/^\d{16}$/.test(nik)) return "NIK harus 16 digit";
+
+  let tanggal = parseInt(nik.substring(6,8));
+  let bulan = parseInt(nik.substring(8,10));
+
+  if(tanggal > 40) tanggal -= 40;
+
+  if(tanggal < 1 || tanggal > 31) return "Tanggal tidak valid";
+  if(bulan < 1 || bulan > 12) return "Bulan tidak valid";
+
+  if(/^(\d)\1+$/.test(nik)) return "NIK tidak valid";
+
+  return true;
+}
+
+/* CLICK BUTTON */
+btn.onclick = () => {
+
+  let nik = input.value;
+
+  let cek = validasiNIK(nik);
+
+  if(cek !== true){
+    error.innerText = cek;
     return;
   }
 
-  // 🔥 pindah ke OTP
-  window.location.href = "otp.html";
-}
+  error.innerText = "";
+
+  // SIMPAN DATA
+  localStorage.setItem("nik", nik);
+
+  // PINDAH
+  window.location.href = "home.html";
+};
+
 </script>
 
 </body>
