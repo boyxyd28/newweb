@@ -95,13 +95,27 @@ p {
   <p>Untuk lanjut, silakan masukkan NIK kamu.</p>
 
   <div class="input-line">
-    <input type="number" placeholder="16 digit">
+    <input type="number" placeholder="16 digit" id="nik">
   </div>
 </div>
 
 <div class="footer">
-  <button>Lanjut</button>
+  <button onclick="lanjut()">Lanjut</button>
 </div>
+
+<script>
+function lanjut() {
+  const nik = document.getElementById("nik").value;
+
+  if (nik.length < 16) {
+    alert("NIK harus 16 digit");
+    return;
+  }
+
+  // 🔥 pindah ke OTP
+  window.location.href = "otp.html";
+}
+</script>
 
 </body>
 </html>
