@@ -168,16 +168,23 @@ btn.onclick = () => {
   let cek = validasiNIK(nik);
 
   if(cek !== true){
+
     error.innerText = cek;
+
+    // 🔥 efek getar
+    document.body.classList.add("shake");
+
+    setTimeout(()=>{
+      document.body.classList.remove("shake");
+    },300);
+
     return;
   }
 
   error.innerText = "";
 
-  // SIMPAN DATA
   localStorage.setItem("nik", nik);
 
-  // PINDAH
   window.location.href = "home.html";
 };
 
