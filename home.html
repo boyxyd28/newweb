@@ -123,6 +123,10 @@ button {
 
 function proses(){
 
+  let hasil = document.getElementById("hasil"); //  TAMBAH INI
+
+  hasil.innerHTML = "🔐 Menghubungkan ke server...";
+
   let nik = document.getElementById("nik").value;
 
   // VALIDASI SEDERHANA
@@ -139,20 +143,42 @@ function proses(){
   let pinjam = parseInt(document.getElementById("pinjam").value);
   let bulan = parseInt(document.getElementById("bulan").value);
 
-  let limit = gaji * 5;
-  let cicilan = pinjam / bulan;
+ let hasil = document.getElementById("hasil");
 
-  let status = "Disetujui ✅";
+// STEP 1
+hasil.innerHTML = "⏳ Memverifikasi data nasabah...";
 
-  if(pinjam > limit){
-    status = "Ditolak ❌";
-  }
+setTimeout(() => {
 
-  document.getElementById("hasil").innerHTML = `
-    <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
-    <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
-    <b>Status:</b> ${status}
-  `;
+  // STEP 2
+  hasil.innerHTML = "📊 Menganalisa kelayakan pinjaman...";
+
+  setTimeout(() => {
+
+   let gaji = parseInt(document.getElementById("gaji").value);
+    let pinjam = parseInt(document.getElementById("pinjam").value);
+    let bulan = parseInt(document.getElementById("bulan").value);
+
+    let limit = gaji * 5;
+    let cicilan = pinjam / bulan;
+
+    let status = "Disetujui ✅";
+
+    if(pinjam > limit){
+      status = "Ditolak ❌"
+    }
+
+    // FINAL RESULT
+    hasil.innerHTML = `
+      <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
+      <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
+      <b>Status:</b> ${status}
+    `;
+
+}, 1500);
+
+}, 1500);
+
 }
 
 </script>
