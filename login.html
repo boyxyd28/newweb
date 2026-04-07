@@ -9,7 +9,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom right, #16a34a, #4ade80);
+  background: linear-gradient(to bottom right, #f9a825, #f57c00);
 }
 
 .container {
@@ -45,7 +45,7 @@ body {
 }
 
 h2 {
-  color: #16a34a;
+  color: #f97316;
   margin: 10px 0 18px;
 }
 
@@ -63,10 +63,15 @@ button {
   margin-top: 14px;
   border-radius: 999px;
   border: none;
-  background: linear-gradient(to right, #16a34a, #22c55e);
+  background: linear-gradient(to right, #f59e0b, #f97316);
   color: #fff;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+button:active {
+  transform: scale(0.97);
 }
 </style>
 </head>
@@ -85,13 +90,11 @@ button {
     <input type="text" placeholder="Email atau No HP">
     <input type="password" placeholder="Password">
 
-    <!-- ✅ TOMBOL FIX -->
     <button id="btnLogin">Aktivasi Pinjaman</button>
 
   </div>
 </div>
 
-<!-- ✅ SCRIPT HARUS DI SINI -->
 <script>
 document.getElementById("btnLogin").addEventListener("click", function() {
 
