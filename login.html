@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-
   <style>
     body {
       margin: 0;
@@ -13,31 +12,104 @@
     }
 
     .container {
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       padding: 20px;
     }
 
     .card {
-      background: #fff;
-      padding: 30px 20px;
-      border-radius: 20px;
       width: 100%;
       max-width: 350px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      padding: 30px 20px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
     h2 {
+      margin: 0 0 20px;
       color: #16a34a;
-      margin-bottom: 20px;
+      font-size: 28px;
     }
 
     input {
       width: 90%;
-      padding: 12px;
+      padding: 14px;
       margin: 8px 0;
-      border-radius: 10px;
-      border: 1px solid
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    button {
+      width: 95%;
+      padding: 14px;
+      margin-top: 14px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(to right, #16a34a, #22c55e);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    button.loading {
+      opacity: 0.75;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <h2>Login</h2>
+
+      <input type="text" id="email" placeholder="Email atau No HP">
+      <input type="password" id="password" placeholder="Password">
+
+      <button id="btnLogin" onclick="login()">Aktivasi Pinjaman</button>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const input = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const btn = document.getElementById("btnLogin");
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^[0-9]{10,13}$/;
+      const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$/;
+
+      if (!emailRegex.test(input) && !phoneRegex.test(input)) {
+        alert("Masukkan email atau nomor HP yang valid");
+        return;
+      }
+
+      if (!passwordRegex.test(password)) {
+        alert("Password minimal 8 karakter, ada huruf besar, kecil, dan angka");
+        return;
+      }
+
+      btn.textContent = "Memproses...";
+      btn.classList.add("loading");
+
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
