@@ -6,82 +6,58 @@
 <title>Home</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial;
-}
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial; }
 
 body {
   background: linear-gradient(to bottom, #f9a825, #f57c00);
-  padding: 15px;
-  padding-bottom: 80px;
+  padding:15px;
+  padding-bottom:80px;
 }
 
 .header {
   background: linear-gradient(to right, #f59e0b, #f97316);
-  padding: 15px;
-  border-radius: 16px;
-  color: white;
-  margin-bottom: 15px;
+  padding:15px;
+  border-radius:16px;
+  color:white;
+  margin-bottom:15px;
 }
 
 .container {
-  background: #fff;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.input-group {
-  margin-top: 15px;
+  background:white;
+  border-radius:20px;
+  padding:20px;
 }
 
 input, select {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  width:100%;
+  border:none;
+  border-bottom:1px solid #ccc;
+  padding:10px 0;
+  margin-top:10px;
 }
 
 button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 30px;
-  border: none;
-  background: linear-gradient(to right, #f59e0b, #f97316);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+  width:100%;
+  margin-top:20px;
+  padding:15px;
+  border-radius:30px;
+  border:none;
+  background: linear-gradient(to right,#f59e0b,#f97316);
+  color:white;
+  font-weight:bold;
 }
 
-.result {
-  margin-top: 20px;
-}
-
-.card-info {
-  background: white;
-  padding: 14px;
-  border-radius: 12px;
-  margin-top: 12px;
-}
-
-.card-info.highlight {
-  background: linear-gradient(to right, orange, red);
-  color: white;
-}
+.result { margin-top:20px; }
 
 .bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  background: white;
-  padding: 12px;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-around;
+  background:white;
+  padding:12px;
 }
 </style>
 </head>
@@ -89,41 +65,24 @@ button {
 <body>
 
 <div class="header">
-  Selamat datang, Nasabah 👋
+  Selamat datang 👋
 </div>
 
 <div class="container">
 
-  <h2>Form Pengajuan</h2>
+  <h2>Pengajuan Pinjaman</h2>
 
-  <div class="input-group">
-    <input id="nama" placeholder="Nama">
-  </div>
+  <input id="nama" placeholder="Nama">
+  <input id="nik" placeholder="NIK">
+  <input id="gaji" placeholder="Penghasilan">
+  <input id="pinjam" placeholder="Pinjaman">
 
-  <div class="input-group">
-    <input id="nik" placeholder="NIK">
-  </div>
-
-  <div id="success" style="color:green; display:none;">
-    ✔ NIK valid
-  </div>
-
-  <div class="input-group">
-    <input id="gaji" placeholder="Penghasilan">
-  </div>
-
-  <div class="input-group">
-    <input id="pinjam" placeholder="Pinjaman">
-  </div>
-
-  <div class="input-group">
-    <select id="bulan">
-      <option value="12">1 Tahun</option>
-      <option value="24">2 Tahun</option>
-      <option value="60">5 Tahun</option>
-      <option value="120">10 Tahun</option>
-    </select>
-  </div>
+  <select id="bulan">
+    <option value="12">1 Tahun</option>
+    <option value="24">2 Tahun</option>
+    <option value="60">5 Tahun</option>
+    <option value="120">10 Tahun</option>
+  </select>
 
   <button onclick="proses()">Ajukan</button>
 
@@ -131,12 +90,6 @@ button {
 
 </div>
 
-<!-- INFO -->
-<div class="card-info">⚡ Proses cepat</div>
-<div class="card-info">💰 Tanpa biaya admin</div>
-<div class="card-info highlight">🔥 Limit besar</div>
-
-<!-- MENU -->
 <div class="bottom-bar">
   <div>🏠</div>
   <div>💳</div>
@@ -147,82 +100,28 @@ button {
 function proses(){
 
   let hasil = document.getElementById("hasil");
-  let nik = document.getElementById("nik").value;
 
-  if(nik.length < 16){
-    document.getElementById("success").style.display = "none";
-    alert("NIK tidak valid");
-    return;
-  }
-
-  document.getElementById("success").style.display = "block";
-
-  // 🚀 ROKET
-  hasil.innerHTML = `
-    <div style="text-align:center; font-size:50px;">🚀</div>
-    <div style="text-align:center;">Meluncurkan...</div>
-  `;
+  hasil.innerHTML = "🚀 Memproses...";
 
   setTimeout(() => {
 
-    // 💥 BOOM
+    let gaji = parseInt(document.getElementById("gaji").value);
+    let pinjam = parseInt(document.getElementById("pinjam").value);
+    let bulan = parseInt(document.getElementById("bulan").value);
+
+    let limit = gaji * 5;
+    let cicilan = pinjam / bulan;
+
+    let status = pinjam > limit ? "❌ Ditolak" : "✅ Disetujui";
+
     hasil.innerHTML = `
-      <div style="text-align:center; font-size:40px;">💥</div>
-      <div style="text-align:center;">Limit ditemukan!</div>
+      <h3>💳 Hasil</h3>
+      Limit: Rp ${limit.toLocaleString("id-ID")}<br>
+      Cicilan: Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
+      Status: ${status}
     `;
 
-    setTimeout(() => {
-
-      let gaji = parseInt(document.getElementById("gaji").value.replace(/\./g,""));
-      let pinjam = parseInt(document.getElementById("pinjam").value.replace(/\./g,""));
-      let bulan = parseInt(document.getElementById("bulan").value);
-
-      let limit = gaji * 5;
-      let cicilan = pinjam / bulan;
-
-      let status = pinjam > limit ? "❌ Ditolak" : "✅ Disetujui";
-
-      // 💳 HASIL FINAL
-      hasil.innerHTML = `
-        <div style="
-          background:white;
-          padding:20px;
-          border-radius:16px;
-          margin-top:15px;
-          box-shadow:0 10px 25px rgba(0,0,0,0.15);
-        ">
-
-          <h3 style="text-align:center;">💳 Hasil Pengajuan</h3>
-          <hr style="margin:10px 0; opacity:0.2;">
-
-          <b>Limit:</b><br>
-          <span style="font-size:20px; color:#f97316;">
-            Rp ${limit.toLocaleString("id-ID")}
-          </span><br><br>
-
-          <b>Cicilan / bulan:</b><br>
-          <span style="font-size:18px;">
-            Rp ${Math.floor(cicilan).toLocaleString("id-ID")}
-          </span>
-
-          <div style="
-            margin-top:15px;
-            padding:10px;
-            border-radius:10px;
-            text-align:center;
-            font-weight:bold;
-            background:${pinjam > limit ? "#fee2e2" : "#dcfce7"};
-            color:${pinjam > limit ? "#dc2626" : "#16a34a"};
-          ">
-            ${status}
-          </div>
-
-        </div>
-      `;
-
-    }, 1200);
-
-  }, 1500);
+  }, 2000);
 }
 </script>
 
