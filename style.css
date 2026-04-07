@@ -92,3 +92,30 @@ body {
   margin-bottom: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.logo .icon {
+  background: orange;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 5px 10px;
+}
+
+.logo .name {
+  font-weight: bold;
+  font-size: 18px;
+} 
+
+.badge {
+  display: inline-block;
+  background: #eee;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
