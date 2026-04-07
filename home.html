@@ -54,6 +54,7 @@ button {
   background: linear-gradient(to right, #f59e0b, #f97316);
   color: white;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .result {
@@ -130,12 +131,12 @@ button {
 
 </div>
 
-<!-- 🔥 INFO -->
+<!-- INFO -->
 <div class="card-info">⚡ Proses cepat</div>
 <div class="card-info">💰 Tanpa biaya admin</div>
 <div class="card-info highlight">🔥 Limit besar</div>
 
-<!-- 🔥 MENU -->
+<!-- MENU -->
 <div class="bottom-bar">
   <div>🏠</div>
   <div>💳</div>
@@ -156,74 +157,29 @@ function proses(){
 
   document.getElementById("success").style.display = "block";
 
-  hasil.innerHTML = "⏳ Memproses...";
+  // 🚀 ROKET
+  hasil.innerHTML = `
+    <div style="text-align:center; font-size:50px;">🚀</div>
+    <div style="text-align:center;">Meluncurkan...</div>
+  `;
 
   setTimeout(() => {
 
-    let gaji = parseInt(document.getElementById("gaji").value);
-    let pinjam = parseInt(document.getElementById("pinjam").value);
-    let bulan = parseInt(document.getElementById("bulan").value);
+    // 💥 BOOM
+    hasil.innerHTML = `
+      <div style="text-align:center; font-size:40px;">💥</div>
+      <div style="text-align:center;">Limit ditemukan!</div>
+    `;
 
-    let limit = gaji * 5;
-    let cicilan = pinjam / bulan;
+    setTimeout(() => {
 
-    let status = ${pinjam > limit ? "❌ Ditolak" : "✅ Disetujui"}
+      let gaji = parseInt(document.getElementById("gaji").value.replace(/\./g,""));
+      let pinjam = parseInt(document.getElementById("pinjam").value.replace(/\./g,""));
+      let bulan = parseInt(document.getElementById("bulan").value);
 
-  .rocket {
-  font-size: 50px;
-  text-align: center;
-  animation: terbang 2s ease forwards;
-}
+      let limit = gaji * 5;
+      let cicilan = pinjam / bulan;
 
-@keyframes terbang {
-  0% {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-200px);
-    opacity: 0;
-  }
-}
-   <h3 style="margin-bottom:10px; text-align:center;">
-  💳 Hasil Pengajuan
-</h3>
+      let status = pinjam > limit ? "❌ Ditolak" : "✅ Disetujui";
 
-<hr style="margin:10px 0; opacity:0.2;">
-      <b>Limit:</b><br>
-      <span style="font-size:20px; color:#f97316;">
-        Rp ${limit.toLocaleString("id-ID")}
-      </span>
-    </div>
-
-    <div style="margin-bottom:8px;">
-      <b>Cicilan / bulan:</b><br>
-      <span style="font-size:18px;">
-        Rp ${Math.floor(cicilan).toLocaleString("id-ID")}
-      </span>
-    </div>
-
-    <div style="
-      margin-top:15px;
-      padding:10px;
-      border-radius:10px;
-      text-align:center;
-      font-weight:bold;
-      background:${pinjam > limit ? "#fee2e2" : "#dcfce7"};
-      color:${pinjam > limit ? "#dc2626" : "#16a34a"};
-    ">
-      ${status}
-    </div>
-
-  </div>
-`;
-
- }, 2500);
-
-} // ✅ nutup function proses
-
-</script>
+      // 💳 HASIL FINAL
