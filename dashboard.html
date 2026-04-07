@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #5b2c83, #a855f7);
+  color: white;
+}
+
+/* HEADER */
+.header {
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  color: #333;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+/* TITLE */
+.title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* INPUT */
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(to right, #f59e0b, #fbbf24);
+  color: #5b2c83;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* OTP BOX */
+.otp-box {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.otp-box input {
+  width: 40px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* HIDDEN */
+.hidden {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  Dashboard
+</div>
+
+<!-- VERIFIKASI -->
+<div class="card">
+  <div class="title">Verifikasi Data</div>
+  <p>Masukkan NIK untuk aktivasi pinjaman</p>
+
+  <input type="number" id="nik" placeholder="Masukkan NIK KTP">
+
+  <button onclick="verifikasi()">Verifikasi Sekarang</button>
+</div>
+
+<!-- OTP -->
+<div class="card hidden" id="otpSection">
+  <div class="title">Kode OTP WhatsApp</div>
+  <p>Kode dikirim ke nomor kamu</p>
+
+  <div class="otp-box">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+  </div>
+
+  <button onclick="cekOTP()">Konfirmasi</button>
+</div>
+
+<script>
+function verifikasi() {
+  const nik = document.getElementById("nik").value;
+
+  if (nik.length < 10) {
+    alert("NIK tidak valid");
+    return;
+  }
+
+  alert("Verifikasi berhasil, kode OTP dikirim");
+
+  document.getElementById("otpSection").classList.remove("hidden");
+}
+
+function cekOTP() {
+  alert("Aktivasi berhasil!");
+}
+</script>
+
+</body>
+</html>
