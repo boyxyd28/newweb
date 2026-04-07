@@ -3,74 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>Verifikasi</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #4c1d95, #7c3aed);
-  color: #fff;
+  background: #ffffff;
+  color: #000;
 }
 
 /* HEADER */
 .header {
   padding: 20px;
-  text-align: center;
-  font-size: 20px;
   font-weight: bold;
 }
 
-/* CARD */
-.card {
-  background: #fff;
-  color: #333;
-  margin: 20px;
+/* CONTAINER */
+.container {
   padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* TITLE */
-.title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 15px;
+/* IMAGE */
+.banner {
+  width: 100%;
+  border-radius: 20px;
+  margin: 20px 0;
+}
+
+/* TEXT */
+h1 {
+  margin: 0;
+}
+
+.desc {
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 25px;
 }
 
 /* INPUT */
-input {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  font-size: 16px;
+.input-box label {
+  font-size: 13px;
 }
 
-/* BUTTON GOLD */
-button {
+.input-box input {
   width: 100%;
-  padding: 14px;
-  margin-top: 15px;
+  padding: 14px 0;
+  border: none;
+  border-bottom: 2px solid #000;
+  background: transparent;
+  font-size: 18px;
+  outline: none;
+}
+
+/* BUTTON */
+button {
+  margin-top: 40px;
+  width: 100%;
+  padding: 15px;
   border-radius: 999px;
   border: none;
-  background: linear-gradient(to right, gold, orange);
+  background: #000;
+  color: #fff;
   font-weight: bold;
-  cursor: pointer;
-}
-
-/* OTP BOX */
-.otp-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.otp-container input {
-  width: 15%;
-  text-align: center;
-  font-size: 20px;
+  font-size: 16px;
 }
 </style>
 </head>
@@ -78,50 +75,28 @@ button {
 <body>
 
 <div class="header">
-  💜 Dashboard Bank Jago
+  ← Log In
 </div>
 
-<!-- 🔥 NIK KTP -->
-<div class="card">
-  <div class="title">📊 Verifikasi NIK KTP</div>
+<div class="container">
 
-  <input type="number" id="nik" placeholder="Masukkan NIK KTP">
+  <!-- GAMBAR -->
+  <img src="nik.jpg" class="banner">
 
-  <button onclick="kirimNIK()">Lanjut Verifikasi</button>
-</div>
+  <h1>Halo!</h1>
 
-<!-- 🔥 OTP -->
-<div class="card">
-  <div class="title">💰 Kode OTP WhatsApp</div>
-
-  <div class="otp-container">
-    <input maxlength="1">
-    <input maxlength="1">
-    <input maxlength="1">
-    <input maxlength="1">
-    <input maxlength="1">
-    <input maxlength="1">
+  <div class="desc">
+    Masukkan NIK KTP untuk melanjutkan proses verifikasi
   </div>
 
-  <button onclick="verifikasiOTP()">Verifikasi OTP</button>
+  <div class="input-box">
+    <label>NIK KTP</label>
+    <input type="number" placeholder="16 digit">
+  </div>
+
+  <button>Lanjut</button>
+
 </div>
-
-<script>
-function kirimNIK() {
-  let nik = document.getElementById("nik").value;
-
-  if (nik.length < 16) {
-    alert("NIK tidak valid!");
-    return;
-  }
-
-  alert("NIK diproses...");
-}
-
-function verifikasiOTP() {
-  alert("OTP berhasil diverifikasi!");
-}
-</script>
 
 </body>
 </html>
