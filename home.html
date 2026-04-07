@@ -16,10 +16,9 @@
 body {
   background: linear-gradient(to bottom, #f9a825, #f57c00);
   padding: 15px;
-  padding-bottom: 80px; /* 🔥 biar gak ketutup menu bawah */
+  padding-bottom: 80px;
 }
 
-/* HEADER */
 .header {
   background: linear-gradient(to right, #f59e0b, #f97316);
   padding: 15px;
@@ -28,16 +27,13 @@ body {
   margin-bottom: 15px;
 }
 
-/* CARD */
 .container {
   background: #fff;
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  animation: fadeUp 0.5s ease;
 }
 
-/* INPUT */
 .input-group {
   margin-top: 15px;
 }
@@ -47,10 +43,8 @@ input, select {
   border: none;
   border-bottom: 1px solid #ccc;
   padding: 10px 0;
-  outline: none;
 }
 
-/* BUTTON */
 button {
   width: 100%;
   margin-top: 20px;
@@ -60,42 +54,24 @@ button {
   background: linear-gradient(to right, #f59e0b, #f97316);
   color: white;
   font-weight: bold;
-  transition: 0.2s;
 }
 
-button:active {
-  transform: scale(0.95);
-  opacity: 0.8;
-}
-
-/* RESULT */
 .result {
   margin-top: 20px;
-  font-size: 14px;
 }
 
-/* 🔥 CARD INFO */
 .card-info {
   background: white;
   padding: 14px;
   border-radius: 12px;
   margin-top: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-  animation: fadeUp 0.5s ease;
-  transition: 0.2s;
-}
-
-.card-info:hover {
-  transform: translateY(-3px);
 }
 
 .card-info.highlight {
   background: linear-gradient(to right, orange, red);
   color: white;
-  font-weight: bold;
 }
 
-/* 🔥 MENU BAWAH */
 .bottom-bar {
   position: fixed;
   bottom: 0;
@@ -105,26 +81,12 @@ button:active {
   justify-content: space-around;
   background: white;
   padding: 12px;
-  border-top: 1px solid #ddd;
-}
-
-/* 🔥 ANIMASI */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
   Selamat datang, Nasabah 👋
 </div>
@@ -133,32 +95,26 @@ button:active {
 
   <h2>Form Pengajuan</h2>
 
-  <!-- NAMA -->
   <div class="input-group">
     <input id="nama" placeholder="Nama">
   </div>
 
-  <!-- NIK -->
   <div class="input-group">
     <input id="nik" placeholder="NIK">
   </div>
 
-  <!-- ✅ FIX POSISI (DI LUAR) -->
-  <div id="success" style="color:green; margin-top:10px; display:none;">
+  <div id="success" style="color:green; display:none;">
     ✔ NIK valid
   </div>
 
-  <!-- GAJI -->
   <div class="input-group">
     <input id="gaji" placeholder="Penghasilan">
   </div>
 
-  <!-- PINJAMAN -->
   <div class="input-group">
     <input id="pinjam" placeholder="Pinjaman">
   </div>
 
-  <!-- DURASI -->
   <div class="input-group">
     <select id="bulan">
       <option value="12">1 Tahun</option>
@@ -170,12 +126,23 @@ button:active {
 
   <button onclick="proses()">Ajukan</button>
 
-  <div class="result" id="hasil"></div>
+  <div id="hasil" class="result"></div>
 
 </div>
 
-<script>
+<!-- 🔥 INFO -->
+<div class="card-info">⚡ Proses cepat</div>
+<div class="card-info">💰 Tanpa biaya admin</div>
+<div class="card-info highlight">🔥 Limit besar</div>
 
+<!-- 🔥 MENU -->
+<div class="bottom-bar">
+  <div>🏠</div>
+  <div>💳</div>
+  <div>👤</div>
+</div>
+
+<script>
 function proses(){
 
   let hasil = document.getElementById("hasil");
@@ -189,69 +156,28 @@ function proses(){
 
   document.getElementById("success").style.display = "block";
 
-  // 🔥 STEP 1 - LOADING BAR
-  hasil.innerHTML = `
-    <div style="text-align:center;">
-      ⏳ Memverifikasi data...<br><br>
-      <div style="height:6px; background:#eee; border-radius:10px;">
-        <div id="bar" style="height:6px; width:10%; background:orange; border-radius:10px;"></div>
-      </div>
-    </div>
-  `;
+  hasil.innerHTML = "⏳ Memproses...";
 
-  let width = 10;
-  let interval = setInterval(() => {
-    width += 10;
-    document.getElementById("bar").style.width = width + "%";
-
-    if(width >= 100){
-      clearInterval(interval);
-    }
-  }, 200);
-
-  // 🔥 STEP 2 - ANALISA
   setTimeout(() => {
 
-    hasil.innerHTML = "📊 Menganalisa data...";
+    let gaji = parseInt(document.getElementById("gaji").value);
+    let pinjam = parseInt(document.getElementById("pinjam").value);
+    let bulan = parseInt(document.getElementById("bulan").value);
 
-    setTimeout(() => {
+    let limit = gaji * 5;
+    let cicilan = pinjam / bulan;
 
-      let gaji = parseInt(document.getElementById("gaji").value);
-      let pinjam = parseInt(document.getElementById("pinjam").value);
-      let bulan = parseInt(document.getElementById("bulan").value);
+    let status = pinjam > limit ? "Ditolak ❌" : "Disetujui ✅";
 
-      let limit = gaji * 5;
-      let cicilan = pinjam / bulan;
-
-      let status = "Disetujui ✅";
-
-      if(pinjam > limit){
-        status = "Ditolak ❌";
-      }
-
-      // 🔥 FINAL RESULT (KEREN)
-      hasil.innerHTML = `
-        <div style="background:#fff; padding:15px; border-radius:12px;">
-          <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
-          <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br><br>
-          <h3>${status}</h3>
-        </div>
-      `;
-
-    }, 1500);
+    hasil.innerHTML = `
+      <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
+      <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
+      <b>Status:</b> ${status}
+    `;
 
   }, 2000);
+}
 </script>
 
 </body>
 </html>
-
-<div class="card-info">⚡ Proses cepat</div>
-<div class="card-info">💰 Tanpa biaya admin</div>
-<div class="card-info highlight">🔥 Limit besar</div>
-
-<div class="bottom-bar">
-  <div>🏠</div>
-  <div>💳</div>
-  <div>👤</div>
-</div>
