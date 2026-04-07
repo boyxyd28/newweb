@@ -14,3 +14,8 @@ slider.oninput = function () {
 
   result.innerText = "Rp " + Math.round(cicilan).toLocaleString("id-ID");
 };
+
+// ✅ FUNCTION TERPISAH
+function goToLogin() {
+  window.location.href = "login.html";
+}
