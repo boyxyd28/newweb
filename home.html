@@ -178,64 +178,69 @@ button:active {
 
 function proses(){
 
-  let hasil = document.getElementById("hasil"); //  TAMBAH INI
-
-  hasil.innerHTML = "🔐 Menghubungkan ke server...";
-
+  let hasil = document.getElementById("hasil");
   let nik = document.getElementById("nik").value;
 
-  // VALIDASI SEDERHANA
   if(nik.length < 16){
     document.getElementById("success").style.display = "none";
     alert("NIK tidak valid");
     return;
   }
 
-  // ✅ TAMPILKAN CENTANG
   document.getElementById("success").style.display = "block";
 
-  let gaji = parseInt(document.getElementById("gaji").value);
-  let pinjam = parseInt(document.getElementById("pinjam").value);
-  let bulan = parseInt(document.getElementById("bulan").value);
+  // 🔥 STEP 1 - LOADING BAR
+  hasil.innerHTML = `
+    <div style="text-align:center;">
+      ⏳ Memverifikasi data...<br><br>
+      <div style="height:6px; background:#eee; border-radius:10px;">
+        <div id="bar" style="height:6px; width:10%; background:orange; border-radius:10px;"></div>
+      </div>
+    </div>
+  `;
 
- let hasil = document.getElementById("hasil");
+  let width = 10;
+  let interval = setInterval(() => {
+    width += 10;
+    document.getElementById("bar").style.width = width + "%";
 
-// STEP 1
-hasil.innerHTML = "⏳ Memverifikasi data nasabah...";
+    if(width >= 100){
+      clearInterval(interval);
+    }
+  }, 200);
 
-setTimeout(() => {
-
-  // STEP 2
-  hasil.innerHTML = "📊 Menganalisa kelayakan pinjaman...";
-
+  // 🔥 STEP 2 - ANALISA
   setTimeout(() => {
 
-   let gaji = parseInt(document.getElementById("gaji").value);
-    let pinjam = parseInt(document.getElementById("pinjam").value);
-    let bulan = parseInt(document.getElementById("bulan").value);
+    hasil.innerHTML = "📊 Menganalisa data...";
 
-    let limit = gaji * 5;
-    let cicilan = pinjam / bulan;
+    setTimeout(() => {
 
-    let status = "Disetujui ✅";
+      let gaji = parseInt(document.getElementById("gaji").value);
+      let pinjam = parseInt(document.getElementById("pinjam").value);
+      let bulan = parseInt(document.getElementById("bulan").value);
 
-    if(pinjam > limit){
-      status = "Ditolak ❌"
-    }
+      let limit = gaji * 5;
+      let cicilan = pinjam / bulan;
 
-    // FINAL RESULT
-    hasil.innerHTML = `
-      <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
-      <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
-      <b>Status:</b> ${status}
-    `;
+      let status = "Disetujui ✅";
 
-}, 1500);
+      if(pinjam > limit){
+        status = "Ditolak ❌";
+      }
 
-}, 1500);
+      // 🔥 FINAL RESULT (KEREN)
+      hasil.innerHTML = `
+        <div style="background:#fff; padding:15px; border-radius:12px;">
+          <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
+          <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br><br>
+          <h3>${status}</h3>
+        </div>
+      `;
 
-}
+    }, 1500);
 
+  }, 2000);
 </script>
 
 </body>
