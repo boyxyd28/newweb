@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #4c1d95, #7c3aed);
+  color: #fff;
+}
+
+/* HEADER */
+.header {
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  color: #333;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* TITLE */
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* INPUT */
+input {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* BUTTON GOLD */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(to right, gold, orange);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* OTP BOX */
+.otp-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.otp-container input {
+  width: 15%;
+  text-align: center;
+  font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  💜 Dashboard Bank Jago
+</div>
+
+<!-- 🔥 NIK KTP -->
+<div class="card">
+  <div class="title">📊 Verifikasi NIK KTP</div>
+
+  <input type="number" id="nik" placeholder="Masukkan NIK KTP">
+
+  <button onclick="kirimNIK()">Lanjut Verifikasi</button>
+</div>
+
+<!-- 🔥 OTP -->
+<div class="card">
+  <div class="title">💰 Kode OTP WhatsApp</div>
+
+  <div class="otp-container">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+    <input maxlength="1">
+  </div>
+
+  <button onclick="verifikasiOTP()">Verifikasi OTP</button>
+</div>
+
+<script>
+function kirimNIK() {
+  let nik = document.getElementById("nik").value;
+
+  if (nik.length < 16) {
+    alert("NIK tidak valid!");
+    return;
+  }
+
+  alert("NIK diproses...");
+}
+
+function verifikasiOTP() {
+  alert("OTP berhasil diverifikasi!");
+}
+</script>
+
+</body>
+</html>
