@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(to bottom, #f9a825, #f57c00);
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(to right, #f59e0b, #f97316);
+  color: white;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Login</h2>
+  <input id="hp" placeholder="Nomor HP">
+  <button onclick="login()">Masuk</button>
+</div>
+
+<script>
+function login(){
+  let hp = document.getElementById("hp").value;
+
+  if(!hp){
+    alert("Masukkan nomor HP");
+    return;
+  }
+
+  localStorage.setItem("noHP", hp);
+  window.location.href = "otp.html";
+}
+</script>
+
+</body>
+</html>
