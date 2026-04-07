@@ -18,7 +18,7 @@ body {
   padding: 15px;
 }
 
-/* 🔥 HEADER */
+/* HEADER */
 .header {
   background: linear-gradient(to right, #f59e0b, #f97316);
   color: white;
@@ -43,16 +43,6 @@ body {
   margin-bottom: 20px;
 }
 
-.title h2 {
-  font-size: 18px;
-}
-
-.title span {
-  color: orange;
-  font-weight: bold;
-}
-
-/* SECTION */
 .section {
   margin-top: 20px;
 }
@@ -65,7 +55,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* INPUT */
 .input-group {
   margin-bottom: 12px;
 }
@@ -81,7 +70,6 @@ body {
   border-bottom: 1px solid #ccc;
   padding: 8px 0;
   outline: none;
-  font-size: 14px;
 }
 
 /* BUTTON */
@@ -100,19 +88,16 @@ button {
 /* RESULT */
 .result {
   margin-top: 15px;
-  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 HEADER (INI YANG TADI KAMU TANYA) -->
-<div class="header">
-
+<!-- HEADER -->
+<div class="header" onclick="showNotif()" style="cursor:pointer;">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-
-    <!-- KIRI -->
+    
     <div style="display:flex; align-items:center; gap:10px;">
       <img src="https://i.pravatar.cc/100" style="width:40px; height:40px; border-radius:50%;">
       <div>
@@ -121,28 +106,23 @@ button {
       </div>
     </div>
 
-    <!-- KANAN -->
-    <div onclick="showNotif()" style="font-size:20px; cursor:pointer;">
-      🔔
-    </div>
+    <div style="font-size:20px;">🔔</div>
 
   </div>
-
 </div>
 
-<!-- 🔥 FORM -->
+<!-- FORM -->
 <div class="container">
 
   <div class="title">
     <h2>Form Pengajuan</h2>
-    <span>Pinjaman</span>
   </div>
 
   <div class="section">
-    <h3>1. Data Pribadi</h3>
+    <h3>Data</h3>
 
     <div class="input-group">
-      <label>Nama Lengkap</label>
+      <label>Nama</label>
       <input id="nama">
     </div>
 
@@ -150,51 +130,25 @@ button {
       <label>NIK</label>
       <input id="nik">
     </div>
-  </div>
-
-  <div class="section">
-    <h3>2. Kontak</h3>
 
     <div class="input-group">
-      <label>No HP</label>
-      <input id="hp">
+      <label>Penghasilan</label>
+      <input id="gaji" type="text" placeholder="1.000.000">
     </div>
 
     <div class="input-group">
-      <label>Email</label>
-      <input id="email">
-    </div>
-  </div>
-
-  <div class="section">
-    <h3>3. Pekerjaan</h3>
-
-    <div class="input-group">
-      <label>Pekerjaan</label>
-      <input id="kerja">
-    </div>
-
-    <div class="input-group">
-      <label>Penghasilan / bulan</label>
-      <input id="gaji" type="number">
-    </div>
-  </div>
-
-  <div class="section">
-    <h3>4. Pinjaman</h3>
-
-    <div class="input-group">
-      <label>Jumlah Pinjaman</label>
-      <input id="pinjam" type="number">
+      <label>Pinjaman</label>
+      <input id="pinjam" type="text" placeholder="2.000.000">
     </div>
 
     <div class="input-group">
       <label>Durasi (bulan)</label>
       <input id="bulan" type="number">
     </div>
+
   </div>
 
-  <button onclick="proses()">Ajukan Sekarang</button>
+  <button type="button" onclick="proses()">Ajukan</button>
 
   <div class="result" id="hasil"></div>
 
@@ -204,16 +158,32 @@ button {
 
 // 🔔 NOTIF
 function showNotif() {
-  alert("🔔 Tidak ada notifikasi baru");
+  alert("Tidak ada notifikasi");
 }
 
-// 🔥 PROSES PINJAMAN
+// 💰 FORMAT RUPIAH
+function formatRupiah(angka) {
+  return angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function pasangFormat(id) {
+  const input = document.getElementById(id);
+  input.addEventListener("input", function (e) {
+    let angka = e.target.value.replace(/\D/g, "");
+    e.target.value = angka ? formatRupiah(angka) : "";
+  });
+}
+
+pasangFormat("gaji");
+pasangFormat("pinjam");
+
+// 🔥 PROSES
 function proses() {
 
   const nama = document.getElementById("nama").value;
   const nik = document.getElementById("nik").value;
-  const gaji = parseInt(document.getElementById("gaji").value);
-  const pinjam = parseInt(document.getElementById("pinjam").value);
+  const gaji = parseInt(document.getElementById("gaji").value.replace(/\./g,""));
+  const pinjam = parseInt(document.getElementById("pinjam").value.replace(/\./g,""));
   const bulan = parseInt(document.getElementById("bulan").value);
 
   if (!nama || nik.length < 16 || !gaji || !pinjam || !bulan) {
@@ -224,15 +194,12 @@ function proses() {
   let limit = gaji * 5;
   let cicilan = pinjam / bulan;
 
-  let status = "Disetujui ✅";
-
-  if (pinjam > limit) {
-    status = "Melebihi limit ❌";
-  }
+  let status = "Disetujui";
+  if (pinjam > limit) status = "Ditolak";
 
   document.getElementById("hasil").innerHTML = `
-    <b>Limit Anda:</b> Rp ${limit.toLocaleString("id-ID")}<br>
-    <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")} / bulan<br>
+    <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
+    <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
     <b>Status:</b> ${status}
   `;
 }
