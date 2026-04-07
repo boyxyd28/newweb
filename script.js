@@ -19,3 +19,8 @@ slider.oninput = function () {
 function goToLogin() {
   window.location.href = "login.html";
 }
+
+function cekOTP() {
+  alert("Aktivasi berhasil!");
+  window.location.href = "./dashboard.html";
+}
