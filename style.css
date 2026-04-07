@@ -179,3 +179,13 @@ body {
   height: 40px;
   object-fit: contain;
 }
+
+.slider {
+  margin-bottom: 20px;
+}
+
+.slider img {
+  width: 100%;
+  border-radius: 20px;
+  display: block;
+}
