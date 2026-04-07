@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>Pengajuan Pinjaman</title>
 
 <style>
 * {
@@ -14,57 +14,81 @@
 }
 
 body {
-  background: #f5f5f5;
+  background: linear-gradient(to bottom, #f9a825, #f57c00);
+  padding: 15px;
 }
 
-/* HEADER */
-.header {
-  background: linear-gradient(to right, #6a1b9a, #9c27b0);
-  color: white;
+/* CONTAINER */
+.container {
+  background: #fff;
+  border-radius: 16px;
   padding: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  max-width: 480px;
+  margin: auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* SALDO */
-.saldo {
-  margin-top: 10px;
-  font-size: 28px;
+/* TITLE */
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title h2 {
+  font-size: 18px;
+}
+
+.title span {
+  color: orange;
   font-weight: bold;
 }
 
-/* CARD */
-.card {
-  background: white;
-  margin: 15px;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+/* SECTION */
+.section {
+  margin-top: 20px;
 }
 
-/* INPUT */
-input {
+.section h3 {
+  font-size: 14px;
+  background: #fbbf24;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* INPUT GROUP */
+.input-group {
+  margin-bottom: 12px;
+}
+
+.input-group label {
+  font-size: 12px;
+  color: #555;
+}
+
+.input-group input {
   width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 8px 0;
+  outline: none;
+  font-size: 14px;
 }
 
 /* BUTTON */
 button {
   width: 100%;
+  margin-top: 20px;
   padding: 14px;
-  margin-top: 15px;
-  border-radius: 30px;
   border: none;
-  background: linear-gradient(to right, #6a1b9a, #ab47bc);
+  border-radius: 30px;
+  background: linear-gradient(to right, #f59e0b, #f97316);
   color: white;
   font-size: 16px;
   font-weight: bold;
 }
 
-/* HASIL */
+/* RESULT */
 .result {
   margin-top: 15px;
   font-size: 14px;
@@ -74,64 +98,105 @@ button {
 
 <body>
 
-<div class="header">
-  <h2>Halo, Nasabah</h2>
-  <div class="saldo" id="saldo">Rp 0</div>
-</div>
+<div class="container">
 
-<!-- FORM -->
-<div class="card">
-  <h3>Pengajuan Pinjaman</h3>
+  <div class="title">
+    <h2>Form Pengajuan</h2>
+    <span>Bank Jago</span>
+  </div>
 
-  <input type="text" id="nama" placeholder="Nama Lengkap">
-  <input type="number" id="nik" placeholder="NIK (16 digit)">
-  <input type="number" id="gaji" placeholder="Penghasilan per bulan">
+  <!-- DATA DIRI -->
+  <div class="section">
+    <h3>1. Data Pribadi</h3>
 
-  <button onclick="hitung()">Ajukan Sekarang</button>
+    <div class="input-group">
+      <label>Nama Lengkap</label>
+      <input id="nama">
+    </div>
+
+    <div class="input-group">
+      <label>NIK</label>
+      <input id="nik">
+    </div>
+  </div>
+
+  <!-- KONTAK -->
+  <div class="section">
+    <h3>2. Kontak</h3>
+
+    <div class="input-group">
+      <label>No HP</label>
+      <input id="hp">
+    </div>
+
+    <div class="input-group">
+      <label>Email</label>
+      <input id="email">
+    </div>
+  </div>
+
+  <!-- PEKERJAAN -->
+  <div class="section">
+    <h3>3. Pekerjaan</h3>
+
+    <div class="input-group">
+      <label>Pekerjaan</label>
+      <input id="kerja">
+    </div>
+
+    <div class="input-group">
+      <label>Penghasilan / bulan</label>
+      <input id="gaji" type="number">
+    </div>
+  </div>
+
+  <!-- PINJAMAN -->
+  <div class="section">
+    <h3>4. Pinjaman</h3>
+
+    <div class="input-group">
+      <label>Jumlah Pinjaman</label>
+      <input id="pinjam" type="number">
+    </div>
+
+    <div class="input-group">
+      <label>Durasi (bulan)</label>
+      <input id="bulan" type="number">
+    </div>
+  </div>
+
+  <button onclick="proses()">Ajukan Sekarang</button>
 
   <div class="result" id="hasil"></div>
+
 </div>
 
 <script>
-
-/* ANIMASI SALDO */
-let saldo = 0;
-let target = 12500000;
-
-let interval = setInterval(() => {
-  saldo += 250000;
-  document.getElementById("saldo").innerText =
-    "Rp " + saldo.toLocaleString("id-ID");
-
-  if (saldo >= target) clearInterval(interval);
-}, 50);
-
-/* ANALISA PINJAMAN */
-function hitung() {
+function proses() {
 
   const nama = document.getElementById("nama").value;
   const nik = document.getElementById("nik").value;
   const gaji = parseInt(document.getElementById("gaji").value);
+  const pinjam = parseInt(document.getElementById("pinjam").value);
+  const bulan = parseInt(document.getElementById("bulan").value);
 
-  if (!nama || nik.length < 16 || !gaji) {
-    alert("Data belum lengkap");
+  if (!nama || nik.length < 16 || !gaji || !pinjam || !bulan) {
+    alert("Lengkapi data");
     return;
   }
 
   let limit = gaji * 5;
-  let cicilan = limit / 12;
+  let cicilan = pinjam / bulan;
 
   let status = "Disetujui ✅";
 
-  if (gaji < 2000000) {
-    status = "Ditolak ❌";
+  if (pinjam > limit) {
+    status = "Melebihi limit ❌";
   }
 
   document.getElementById("hasil").innerHTML = `
-    <br>
-    <b>Nama:</b> ${nama}<br>
-    <b>Limit Pinjaman:</b> Rp ${limit.toLocaleString("id-ID")}<br>
-    <b>Cicilan / bulan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
+    <b>Limit Anda:</b> Rp ${limit.toLocaleString("id-ID")}<br>
+    <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")} / bulan<br>
     <b>Status:</b> ${status}
   `;
 }
