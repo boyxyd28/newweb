@@ -17,7 +17,57 @@
     <input type="text" id="email" placeholder="Email atau No HP"><br><br>
     <input type="password" id="password" placeholder="Password"><br><br>
 
+   <!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <h2>Login</h2>
+
+    <input type="text" id="email" placeholder="Email atau No HP"><br><br>
+    <input type="password" id="password" placeholder="Password"><br><br>
+
     <button onclick="login()">Masuk</button>
+  </div>
+</div>
+
+<script>
+function login() {
+  const input = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[0-9]{10,13}$/;
+
+  if (!emailRegex.test(input) && !phoneRegex.test(input)) {
+    alert("Masukkan email atau nomor HP yang valid");
+    return;
+  }
+
+  const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$/;
+
+  if (!passwordRegex.test(password)) {
+    alert("Password minimal 8 karakter, ada huruf besar, kecil, dan angka");
+    return;
+  }
+
+  alert("Login berhasil!");
+  window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>
+
+  <div class="item">
+    📅 <b>Tenor fleksibel</b>
+    <p>Pilih sesuai kebutuhan kamu</p>
   </div>
 </div>
 
