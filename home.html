@@ -169,11 +169,46 @@ function proses(){
 
     let status = pinjam > limit ? "Ditolak ❌" : "Disetujui ✅";
 
-    hasil.innerHTML = `
-      <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
-      <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
-      <b>Status:</b> ${status}
-    `;
+  hasil.innerHTML = `
+  <div style="
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: fadeUp 0.4s ease;
+  ">
+    
+    <h3 style="margin-bottom:10px;">💳 Hasil Pengajuan</h3>
+
+    <div style="margin-bottom:8px;">
+      <b>Limit:</b><br>
+      <span style="font-size:20px; color:#f97316;">
+        Rp ${limit.toLocaleString("id-ID")}
+      </span>
+    </div>
+
+    <div style="margin-bottom:8px;">
+      <b>Cicilan / bulan:</b><br>
+      <span style="font-size:18px;">
+        Rp ${Math.floor(cicilan).toLocaleString("id-ID")}
+      </span>
+    </div>
+
+    <div style="
+      margin-top:15px;
+      padding:10px;
+      border-radius:10px;
+      text-align:center;
+      font-weight:bold;
+      background:${pinjam > limit ? "#fee2e2" : "#dcfce7"};
+      color:${pinjam > limit ? "#dc2626" : "#16a34a"};
+    ">
+      ${status}
+    </div>
+
+  </div>
+`;
 
  }, 2000);
 
