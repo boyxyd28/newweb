@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="container">
   <div class="card">
     <h2>Login</h2>
@@ -43,47 +44,3 @@ function login() {
 </script>
 
 </body>
-</html>
-
-  const 
-  if "Password harus minimal 8 karakter, ada huruf besar, kecil, dan angka");
-    return;
-  }
-
- "Login berhasil!");
-  
-</script>
-
-  // VALIDASI EMAIL ATAU NOMOR HP
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^[0-9]{10,13}$/;
-
-  if (!emailRegex.test(input) && !phoneRegex.test(input)) {
-    alert("Masukkan email atau nomor HP yang valid");
-    return;
-  }
-
-  // VALIDASI PASSWORD
-  const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$/;
-
-  if (!passwordRegex.test(password)) {
-    alert("Password harus minimal 8 karakter, ada huruf besar, kecil, dan angka");
-    return;
-  }
-
-  // JIKA LOLOS VALIDASI
-  alert("Login berhasil!");
-  window.location.href = "dashboard.html";
-}
-</script>
-
-  if(email === "admin@gmail.com" && password === "123456"){
-    window.location.href = "dashboard.html";
-  } else {
-    alert("Login gagal");
-  }
-}
-</script>
-
-</body>
-</html>
