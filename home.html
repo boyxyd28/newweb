@@ -3,95 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>Home</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-
-body{
-  background:linear-gradient(to bottom,#f9a825,#f57c00);
-  min-height:100vh;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
 }
 
-/* HEADER APP */
-.header{
-  position:sticky;
-  top:0;
-  background:linear-gradient(to right,#f59e0b,#f97316);
-  color:#fff;
-  padding:16px;
-  z-index:10;
+body {
+  background: linear-gradient(to bottom, #f9a825, #f57c00);
+  padding: 15px;
 }
 
-/* CONTENT */
-.content{
-  padding:20px;
-  padding-bottom:100px;
+/* HEADER */
+.header {
+  background: linear-gradient(to right, #f59e0b, #f97316);
+  padding: 15px;
+  border-radius: 16px;
+  color: white;
+  margin-bottom: 15px;
 }
 
-/* SALDO CARD */
-.saldo{
-  background:linear-gradient(to right,#f97316,#fb923c);
-  color:white;
-  padding:20px;
-  border-radius:16px;
-  margin-bottom:15px;
-}
-
-.saldo h1{
-  font-size:28px;
-  margin-top:5px;
+/* CARD */
+.container {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
 }
 
 /* INPUT */
-.input-group{
-  margin-bottom:14px;
+.input-group {
+  margin-top: 15px;
 }
 
-input,select{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-bottom:2px solid #333;
-  background:transparent;
-  font-size:16px;
+input, select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+  outline: none;
 }
 
-/* BUTTON FIXED */
-.footer{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  padding:15px;
-  box-shadow:0 -5px 20px rgba(0,0,0,0.1);
+/* BUTTON */
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(to right, #f59e0b, #f97316);
+  color: white;
+  font-weight: bold;
 }
 
-.footer button{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(to right,#f59e0b,#f97316);
-  color:white;
-  font-size:18px;
-}
-
-/* STATUS */
-.status{
-  margin-top:15px;
-  font-weight:bold;
-}
-
-/* LOADING DOT */
-.loading span{
-  animation: blink 1s infinite;
-}
-@keyframes blink{
-  0%{opacity:0}
-  50%{opacity:1}
-  100%{opacity:0}
+/* RESULT */
+.result {
+  margin-top: 20px;
+  font-size: 14px;
 }
 </style>
 </head>
@@ -100,34 +71,39 @@ input,select{
 
 <!-- HEADER -->
 <div class="header">
-  <b>Dashboard</b>
+  Selamat datang, Nasabah 👋
 </div>
 
-<div class="content">
+<div class="container">
 
-  <!-- SALDO -->
-  <div class="saldo">
-    <div>Limit Pinjaman</div>
-    <h1 id="saldo">Rp 0</h1>
-  </div>
+  <h2>Form Pengajuan</h2>
 
-  <!-- FORM -->
+  <!-- NAMA -->
   <div class="input-group">
     <input id="nama" placeholder="Nama">
   </div>
 
+  <!-- NIK -->
   <div class="input-group">
     <input id="nik" placeholder="NIK">
   </div>
 
+  <!-- ✅ FIX POSISI (DI LUAR) -->
+  <div id="success" style="color:green; margin-top:10px; display:none;">
+    ✔ NIK valid
+  </div>
+
+  <!-- GAJI -->
   <div class="input-group">
     <input id="gaji" placeholder="Penghasilan">
   </div>
 
+  <!-- PINJAMAN -->
   <div class="input-group">
     <input id="pinjam" placeholder="Pinjaman">
   </div>
 
+  <!-- DURASI -->
   <div class="input-group">
     <select id="bulan">
       <option value="12">1 Tahun</option>
@@ -137,74 +113,50 @@ input,select{
     </select>
   </div>
 
-  <div id="status" class="status"></div>
+  <button onclick="proses()">Ajukan</button>
 
-</div>
+  <div class="result" id="hasil"></div>
 
-<!-- BUTTON BAWAH -->
-<div class="footer">
-  <button id="btn">Ajukan Sekarang</button>
 </div>
 
 <script>
 
-// FORMAT UANG
-["gaji","pinjam"].forEach(id=>{
-  document.getElementById(id).addEventListener("input",function(e){
-    let angka=e.target.value.replace(/\D/g,"");
-    e.target.value=angka.replace(/\B(?=(\d{3})+(?!\d))/g,".");
-  });
-});
+function proses(){
 
-// ANIMASI SALDO
-function animasi(target){
-  let x=0;
-  let el=document.getElementById("saldo");
+  let nik = document.getElementById("nik").value;
 
-  let i=setInterval(()=>{
-    x+=target/20;
-    if(x>=target){x=target;clearInterval(i);}
-    el.innerText="Rp "+Math.floor(x).toLocaleString("id-ID");
-  },50);
-}
-
-// PROSES
-document.getElementById("btn").onclick=()=>{
-
-  let nama=document.getElementById("nama").value;
-  let nik=document.getElementById("nik").value;
-  let gaji=parseInt(document.getElementById("gaji").value.replace(/\./g,""));
-  let pinjam=parseInt(document.getElementById("pinjam").value.replace(/\./g,""));
-  let bulan=parseInt(document.getElementById("bulan").value);
-
-  let status=document.getElementById("status");
-
-  if(!nama || nik.length<16 || !gaji || !pinjam){
-    alert("Lengkapi data");
+  // VALIDASI SEDERHANA
+  if(nik.length < 16){
+    document.getElementById("success").style.display = "none";
+    alert("NIK tidak valid");
     return;
   }
 
-  status.innerHTML="Memverifikasi<span>.</span><span>.</span><span>.</span>";
+  // ✅ TAMPILKAN CENTANG
+  document.getElementById("success").style.display = "block";
 
-  setTimeout(()=>{
-    status.innerHTML="Menganalisa data<span>.</span><span>.</span><span>.</span>";
+  let gaji = parseInt(document.getElementById("gaji").value);
+  let pinjam = parseInt(document.getElementById("pinjam").value);
+  let bulan = parseInt(document.getElementById("bulan").value);
 
-    setTimeout(()=>{
-      let limit=gaji*5;
-      let cicilan=pinjam/bulan;
+  let limit = gaji * 5;
+  let cicilan = pinjam / bulan;
 
-      animasi(limit);
+  let status = "Disetujui ✅";
 
-      status.innerHTML=
-      "Limit: Rp "+limit.toLocaleString("id-ID")+"<br>"+
-      "Cicilan: Rp "+Math.floor(cicilan).toLocaleString("id-ID");
+  if(pinjam > limit){
+    status = "Ditolak ❌";
+  }
 
-    },1500);
+  document.getElementById("hasil").innerHTML = `
+    <b>Limit:</b> Rp ${limit.toLocaleString("id-ID")}<br>
+    <b>Cicilan:</b> Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
+    <b>Status:</b> ${status}
+  `;
+}
 
-  },1500);
-
-};
 </script>
 
 </body>
 </html>
+
