@@ -119,3 +119,57 @@ body {
   border-radius: 20px;
   font-size: 12px;
 }
+
+.choice-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.choice-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.choice-box {
+  background: white;
+  border-radius: 30px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.choice-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.j-icon {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-weight: bold;
+}
+
+.divider {
+  width: 1px;
+  height: 25px;
+  background: #ccc;
+}
+
+.choice-item {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.choice-item:hover {
+  transform: scale(1.05);
+}
+
+.choice-item:active {
+  transform: scale(0.95);
+}
