@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+
   <style>
     body {
       margin: 0;
@@ -25,14 +26,30 @@
       background: #fff;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-      padding: 30px 20px;
+      padding: 25px 20px;
       text-align: center;
+    }
+
+    /* ✅ SLIDER UKURAN PALING PAS */
+    .slider {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     h2 {
       margin: 0 0 20px;
       color: #16a34a;
-      font-size: 28px;
+      font-size: 26px;
     }
 
     input {
@@ -69,49 +86,63 @@
     }
   </style>
 </head>
+
 <body>
 
- <div class="container">
+<div class="container">
+  <div class="card">
 
-  <div class="slider">
-    <img id="slide" src="artos.jpg">
-  </div>
-
-      <input type="text" id="email" placeholder="Email atau No HP">
-      <input type="password" id="password" placeholder="Password">
-
-      <button id="btnLogin" onclick="login()">Aktivasi Pinjaman</button>
+    <!-- ✅ SLIDER DI DALAM CARD -->
+    <div class="slider">
+      <img id="slide" src="artos.jpg">
     </div>
+
+    <h2>Login</h2>
+
+    <input type="text" id="email" placeholder="Email atau No HP">
+    <input type="password" id="password" placeholder="Password">
+
+    <button id="btnLogin" onclick="login()">Aktivasi Pinjaman</button>
+
   </div>
+</div>
 
-  <script>
-    function login() {
-      const input = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const btn = document.getElementById("btnLogin");
+<script>
+  const images = ["artos.jpg", "jago.jpg"];
+  let index = 0;
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phoneRegex = /^[0-9]{10,13}$/;
-      const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$/;
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    document.getElementById("slide").src = images[index];
+  }, 3000);
 
-      if (!emailRegex.test(input) && !phoneRegex.test(input)) {
-        alert("Masukkan email atau nomor HP yang valid");
-        return;
-      }
+  function login() {
+    const input = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const btn = document.getElementById("btnLogin");
 
-      if (!passwordRegex.test(password)) {
-        alert("Password minimal 8 karakter, ada huruf besar, kecil, dan angka");
-        return;
-      }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10,13}$/;
+    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$/;
 
-      btn.textContent = "Memproses...";
-      btn.classList.add("loading");
-
-      setTimeout(() => {
-        window.location.href = "dashboard.html";
-      }, 1200);
+    if (!emailRegex.test(input) && !phoneRegex.test(input)) {
+      alert("Masukkan email atau nomor HP yang valid");
+      return;
     }
-  </script>
+
+    if (!passwordRegex.test(password)) {
+      alert("Password minimal 8 karakter, ada huruf besar, kecil, dan angka");
+      return;
+    }
+
+    btn.textContent = "Memproses...";
+    btn.classList.add("loading");
+
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 1200);
+  }
+</script>
 
 </body>
 </html>
