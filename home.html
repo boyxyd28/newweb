@@ -167,7 +167,7 @@ function proses(){
     let limit = gaji * 5;
     let cicilan = pinjam / bulan;
 
-    let status = pinjam > limit ? "Ditolak ❌" : "Disetujui ✅";
+    let status = ${pinjam > limit ? "❌ Ditolak" : "✅ Disetujui"}
 
   hasil.innerHTML = `
   <div style="
@@ -178,10 +178,11 @@ function proses(){
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     animation: fadeUp 0.4s ease;
   ">
-    
-    <h3 style="margin-bottom:10px;">💳 Hasil Pengajuan</h3>
+   <h3 style="margin-bottom:10px; text-align:center;">
+  💳 Hasil Pengajuan
+</h3>
 
-    <div style="margin-bottom:8px;">
+<hr style="margin:10px 0; opacity:0.2;">
       <b>Limit:</b><br>
       <span style="font-size:20px; color:#f97316;">
         Rp ${limit.toLocaleString("id-ID")}
