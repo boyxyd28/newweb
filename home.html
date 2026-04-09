@@ -109,15 +109,47 @@ button:active, .card:active, .bottom-bar div:active{
   </div>
 </div>
 
-<!-- PENGAJUAN -->
 <div id="pengajuanPage" class="page">
-  <div class="card">
-    <h3>Pengajuan Pinjaman</h3>
 
-    <input id="nama" placeholder="Nama">
-    <input id="nik" placeholder="NIK">
-    <input id="gaji" placeholder="Penghasilan">
-    <input id="pinjam" placeholder="Pinjaman">
+  <div class="card">
+    <h2>Pengajuan Pinjaman</h2>
+
+    <h4>🧍 Data Pribadi</h4>
+    <input id="nama" placeholder="Nama lengkap (sesuai KTP)">
+    <input id="ttl" placeholder="Tempat & Tanggal Lahir">
+    
+    <select id="jk">
+      <option>Laki-laki</option>
+      <option>Perempuan</option>
+    </select>
+
+    <input id="alamat" placeholder="Alamat lengkap">
+    <input id="hp" placeholder="Nomor HP aktif">
+    <input id="email" placeholder="Email aktif">
+    <input id="nik" placeholder="Nomor KTP / SIM / Paspor">
+
+    <h4>💼 Data Pekerjaan</h4>
+    <input id="perusahaan" placeholder="Nama perusahaan / usaha">
+    <input id="pekerjaan" placeholder="Jenis pekerjaan / usaha">
+    <input id="jabatan" placeholder="Jabatan">
+    <input id="lama" placeholder="Lama bekerja / usaha (tahun)">
+    <input id="alamatKerja" placeholder="Alamat tempat kerja">
+
+    <h4>💰 Data Pinjaman</h4>
+    <input id="pinjam" placeholder="Jumlah pinjaman (Rp)">
+    <input id="tujuan" placeholder="Tujuan pinjaman">
+
+    <select id="bulan">
+      <option value="12">12 Bulan</option>
+      <option value="24">24 Bulan</option>
+      <option value="36">36 Bulan</option>
+    </select>
+
+    <button onclick="proses()">Ajukan Sekarang</button>
+
+  </div>
+
+</div>
 
     <select id="bulan">
       <option value="12">1 Tahun</option>
