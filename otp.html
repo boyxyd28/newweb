@@ -2,83 +2,43 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OTP</title>
+<title>Verifikasi OTP</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial;
+body{
+  font-family:Arial;
+  padding:20px;
+  background:linear-gradient(to bottom,#f9a825,#f57c00);
+  color:#333;
 }
 
-body {
-  height: 100vh;
-  background: linear-gradient(to bottom, #f9a825, #f57c00);
-  display: flex;
-  flex-direction: column;
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
 }
 
-/* HEADER */
-.header {
-  padding: 20px;
-  font-size: 18px;
+input{
+  padding:12px;
+  width:100%;
+  font-size:18px;
+  text-align:center;
+  letter-spacing:5px;
 }
 
-/* CONTENT */
-.content {
-  flex: 1;
-  padding: 20px;
+button{
+  padding:12px;
+  width:100%;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:orange;
+  color:white;
+  font-size:16px;
 }
 
-/* TITLE */
-h1 {
-  font-size: 26px;
-}
-
-/* OTP BOX */
-.otp-box {
-  display: flex;
-  gap: 10px;
-  margin-top: 30px;
-  justify-content: center;
-}
-
-.otp-box input {
-  width: 48px;
-  height: 58px;
-  text-align: center;
-  font-size: 24px;
-  border: none;
-  border-bottom: 2px solid black;
-  background: transparent;
-  transition: 0.2s;
-}
-
-.otp-box input.filled {
-  transform: scale(1.15);
-  border-bottom: 3px solid black;
-}
-
-.otp-box input:focus {
-  outline: none;
-  border-bottom: 3px solid black;
-}
-
-/* BUTTON */
-.btn {
-  margin-top: 30px;
-}
-
-.btn button {
-  width: 100%;
-  padding: 16px;
-  border-radius: 30px;
-  border: none;
-  background: #ccc;
-  color: white;
-  font-size: 18px;
+button:disabled{
+  background:gray;
 }
 </style>
 
@@ -86,82 +46,95 @@ h1 {
 
 <body>
 
-<div class="header">← Log In</div>
+<div class="card">
 
-<div class="content">
+<h2>🔐 Verifikasi OTP</h2>
+<p>Kode dikirim ke WhatsApp kamu</p>
 
-<h1>Masukkan kode OTP</h1>
+<input id="kode" maxlength="6" placeholder="------">
 
-<div class="otp-box">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-  <input maxlength="1">
-</div>
+<button onclick="verifikasi()">Verifikasi</button>
 
-<div class="btn">
-  <button id="btn">Verifikasi</button>
-</div>
+<button id="resendBtn" onclick="kirimUlang()" disabled>
+Kirim ulang (60)
+</button>
 
 </div>
 
 <script>
-const inputs = document.querySelectorAll(".otp-box input");
-const btn = document.getElementById("btn");
 
-inputs[0].focus();
+let waktu = 60;
+let kodeAsli = "";
 
-inputs.forEach((input, index) => {
-
-  input.addEventListener("input", () => {
-    input.value = input.value.replace(/[^0-9]/g, "");
-
-    if (input.value) {
-      input.classList.add("filled");
-      if (index < 5) inputs[index + 1].focus();
-    } else {
-      input.classList.remove("filled");
-    }
-
-    cek();
-  });
-
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Backspace" && !input.value && index > 0) {
-      inputs[index - 1].focus();
-    }
-  });
-
-});
-
-function cek() {
-  let kode = "";
-  inputs.forEach(i => kode += i.value);
-
-  if (kode.length === 6) {
-    btn.style.background = "black";
-  } else {
-    btn.style.background = "#ccc";
-  }
+// 🔥 GENERATE OTP RANDOM
+function generateOTP(){
+  return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-btn.onclick = () => {
-  let kode = "";
-  inputs.forEach(i => kode += i.value);
+// 🔥 KIRIM OTP (SIMULASI WA)
+function kirimOTP(){
+  kodeAsli = generateOTP();
 
-  if (kode.length < 6) {
-    alert("Kode belum lengkap");
+  // simpan ke localStorage
+  localStorage.setItem("otp", kodeAsli);
+
+  alert("📲 Kode OTP: " + kodeAsli);
+}
+
+// 🔥 TIMER
+function startTimer(){
+  let btn = document.getElementById("resendBtn");
+
+  let interval = setInterval(()=>{
+    waktu--;
+    btn.innerText = "Kirim ulang ("+waktu+")";
+
+    if(waktu <= 0){
+      clearInterval(interval);
+      btn.disabled = false;
+      btn.innerText = "Kirim ulang";
+    }
+  },1000);
+}
+
+// 🔥 RESEND
+function kirimUlang(){
+  waktu = 60;
+  document.getElementById("resendBtn").disabled = true;
+  kirimOTP();
+  startTimer();
+}
+
+// 🔥 VERIFIKASI
+function verifikasi(){
+  let input = document.getElementById("kode").value;
+  let otp = localStorage.getItem("otp");
+
+  if(input !== otp){
+    alert("❌ Kode salah!");
     return;
   }
 
-  btn.innerText = "Memproses...";
+  let nik = localStorage.getItem("nik_temp");
+  let nama = localStorage.getItem("nama_temp");
 
-  setTimeout(() => {
-    window.location.href = "home.html";
-  }, 1000);
-};
+  localStorage.setItem("nik", nik);
+  localStorage.setItem("nama", nama);
+  localStorage.setItem("isLogin", "true");
+
+  localStorage.removeItem("nik_temp");
+  localStorage.removeItem("nama_temp");
+  localStorage.removeItem("otp");
+
+  alert("✅ Verifikasi berhasil");
+
+  window.location.href = "home.html";
+}
+
+// 🔥 AUTO RUN
+kirimOTP();
+startTimer();
+
 </script>
 
 </body>
