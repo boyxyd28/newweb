@@ -202,10 +202,12 @@ function proses(){
   localStorage.setItem("nik", document.getElementById("nik").value);
   localStorage.setItem("limit", limit);
 
-  notif("Pengajuan berhasil");
-  loadData(); 
-showPage("dashboardPage");
-}
+ notif("Pengajuan berhasil");
+
+setTimeout(()=>{
+  loadData();
+  showPage("dashboardPage");
+}, 1000);
 
 // NOTIF
 function notif(text){
