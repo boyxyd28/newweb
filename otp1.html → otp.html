@@ -1,87 +1,22 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>Verifikasi OTP</title>
-
-<style>
-body{
-  font-family:Arial;
-  padding:20px;
-  background:linear-gradient(to bottom,#f9a825,#f57c00);
-  color:#333;
-}
-
-.card{
-  background:white;
-  padding:20px;
-  border-radius:15px;
-}
-
-input{
-  padding:12px;
-  width:100%;
-  font-size:18px;
-  text-align:center;
-  letter-spacing:5px;
-}
-
-button{
-  padding:12px;
-  width:100%;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:orange;
-  color:white;
-  font-size:16px;
-}
-
-button:disabled{
-  background:gray;
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="card">
-
-<h2>🔐 Verifikasi OTP</h2>
-<p>Kode dikirim ke WhatsApp kamu</p>
-
-<input id="kode" maxlength="6" placeholder="------">
-
-<button onclick="verifikasi()">Verifikasi</button>
-
-<button id="resendBtn" onclick="kirimUlang()" disabled>
-Kirim ulang (60)
-</button>
-
-</div>
-
 <script>
 
 let waktu = 60;
 let kodeAsli = "";
 
-// 🔥 GENERATE OTP RANDOM
+// generate OTP
 function generateOTP(){
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-// 🔥 KIRIM OTP (SIMULASI WA)
+// kirim OTP
 function kirimOTP(){
   kodeAsli = generateOTP();
-
-  // simpan ke localStorage
   localStorage.setItem("otp", kodeAsli);
 
-  alert("📲 Kode OTP: " + kodeAsli);
+  alert("Kode OTP: " + kodeAsli);
 }
 
-// 🔥 TIMER
+// timer
 function startTimer(){
   let btn = document.getElementById("resendBtn");
 
@@ -97,7 +32,7 @@ function startTimer(){
   },1000);
 }
 
-// 🔥 RESEND
+// resend
 function kirimUlang(){
   waktu = 60;
   document.getElementById("resendBtn").disabled = true;
@@ -105,37 +40,33 @@ function kirimUlang(){
   startTimer();
 }
 
-// 🔥 VERIFIKASI
+// verifikasi
 function verifikasi(){
   let input = document.getElementById("kode").value;
   let otp = localStorage.getItem("otp");
 
   if(input !== otp){
-    alert("❌ Kode salah!");
+    alert("Kode salah!");
     return;
   }
 
-  let nik = localStorage.getItem("nik_temp");
   let nama = localStorage.getItem("nama_temp");
+  let nik = localStorage.getItem("nik_temp");
 
-  localStorage.setItem("nik", nik);
   localStorage.setItem("nama", nama);
+  localStorage.setItem("nik", nik);
   localStorage.setItem("isLogin", "true");
 
-  localStorage.removeItem("nik_temp");
   localStorage.removeItem("nama_temp");
+  localStorage.removeItem("nik_temp");
   localStorage.removeItem("otp");
-
-  alert("✅ Verifikasi berhasil");
 
   window.location.href = "home.html";
 }
 
-// 🔥 AUTO RUN
+// auto jalan
 kirimOTP();
 startTimer();
 
 </script>
 
-</body>
-</html>
