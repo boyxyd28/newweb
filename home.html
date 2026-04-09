@@ -9,9 +9,51 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
 body{
-  background:linear-gradient(to bottom,#f9a825,#f57c00);
-  padding:15px;
-  padding-bottom:80px;
+ /* 🔥 EFEK TEKAN */
+button:active, .card:active, .bottom-bar div:active{
+  transform: scale(0.95);
+  opacity: 0.7;
+  transition: 0.1s;
+}
+
+/* 🔥 TRANSISI PAGE */
+.page{
+  position:absolute;
+  width:100%;
+  top:0;
+  left:0;
+  transition: all 0.3s ease;
+}
+
+.hide{
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.show{
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* 🔥 RIPPLE */
+.ripple{
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple span{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,0.5);
+  transform:scale(0);
+  animation:ripple 0.5s linear;
+}
+
+@keyframes ripple{
+  to{
+    transform:scale(4);
+    opacity:0;
+  }
 }
 
 /* CARD */
@@ -60,8 +102,7 @@ button{
 <body>
 
 <!-- DASHBOARD -->
-<div id="dashboardPage">
-
+<div id="dashboardPage" class="page show">
   <div style="
     background:linear-gradient(to right,#f59e0b,#f97316);
     padding:20px;
