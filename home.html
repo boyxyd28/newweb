@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>App Pinjaman</title>
+<title>App Pinjaman Premium</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
@@ -14,20 +14,15 @@ body{
   padding-bottom:80px;
 }
 
-.header{
-  background:linear-gradient(to right,#f59e0b,#f97316);
+/* CARD */
+.card{
+  background:white;
   padding:15px;
   border-radius:16px;
-  color:white;
-  margin-bottom:15px;
+  margin-top:10px;
 }
 
-.container{
-  background:white;
-  border-radius:20px;
-  padding:20px;
-}
-
+/* INPUT */
 input,select{
   width:100%;
   border:none;
@@ -36,6 +31,7 @@ input,select{
   margin-top:10px;
 }
 
+/* BUTTON */
 button{
   width:100%;
   margin-top:20px;
@@ -47,6 +43,7 @@ button{
   font-weight:bold;
 }
 
+/* NAV */
 .bottom-bar{
   position:fixed;
   bottom:0;
@@ -64,19 +61,41 @@ button{
 
 <!-- DASHBOARD -->
 <div id="dashboardPage">
-  <div class="header">Selamat datang 👋</div>
 
-  <div style="background:white;padding:15px;border-radius:16px;">
-    👤 <b id="namaUser">Nasabah</b><br><br>
-    💰 Limit: <b id="limitUser">Rp 0</b>
+  <div style="
+    background:linear-gradient(to right,#f59e0b,#f97316);
+    padding:20px;
+    border-radius:20px;
+    color:white;
+  ">
+    <div>Selamat datang 👋</div>
+    <div id="namaUser" style="font-weight:bold;">Nasabah</div>
+
+    <div style="margin-top:10px;">Saldo Anda</div>
+    <div id="saldo" style="font-size:26px;font-weight:bold;">Rp 0</div>
   </div>
+
+  <!-- QUICK MENU -->
+  <div style="margin-top:15px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
+    <div onclick="showPage('pengajuanPage')" class="card">💰<br><small>Pinjam</small></div>
+    <div onclick="showPage('riwayatPage')" class="card">🧾<br><small>Riwayat</small></div>
+    <div onclick="showPage('cairPage')" class="card">💸<br><small>Cair</small></div>
+    <div onclick="showPage('profilPage')" class="card">👤<br><small>Profil</small></div>
+  </div>
+
+  <!-- INFO -->
+  <div class="card">⚡ Proses cepat 5 menit</div>
+  <div class="card">🔒 Data aman & terenkripsi</div>
+  <div class="card" style="background:linear-gradient(to right,#f59e0b,#f97316); color:white;">
+    🔥 Limit hingga 50 juta
+  </div>
+
 </div>
 
 <!-- PENGAJUAN -->
 <div id="pengajuanPage" style="display:none;">
-  <div class="container">
-
-    <h2>Pengajuan Pinjaman</h2>
+  <div class="card">
+    <h3>Pengajuan Pinjaman</h3>
 
     <input id="nama" placeholder="Nama">
     <input id="nik" placeholder="NIK">
@@ -92,19 +111,18 @@ button{
     <button onclick="proses()">Ajukan</button>
 
     <div id="hasil"></div>
-
   </div>
 </div>
 
 <!-- RIWAYAT -->
-<div id="riwayatPage" style="display:none; padding:15px;">
+<div id="riwayatPage" style="display:none; padding:10px;">
   <h3>🧾 Riwayat</h3>
   <div id="riwayatBox"></div>
 </div>
 
 <!-- PENCAIRAN -->
-<div id="cairPage" style="display:none; padding:15px;">
-  <h3>💸 Pencairan Dana</h3>
+<div id="cairPage" style="display:none; padding:10px;">
+  <h3>💸 Pencairan</h3>
   <input placeholder="Nama Bank">
   <input placeholder="Nomor Rekening">
   <input placeholder="Nama Pemilik">
@@ -112,19 +130,19 @@ button{
 </div>
 
 <!-- PROFIL -->
-<div id="profilPage" style="display:none; padding:15px;">
+<div id="profilPage" style="display:none; padding:10px;">
   <h3>👤 Profil</h3>
   Nama: <span id="profilNama"></span><br>
   NIK: <span id="profilNik"></span>
 </div>
 
 <!-- NOTIF -->
-<div id="notifPage" style="display:none; padding:15px;">
+<div id="notifPage" style="display:none; padding:10px;">
   <h3>🔔 Notifikasi</h3>
   <div id="notifBox"></div>
 </div>
 
-<!-- MENU -->
+<!-- NAV -->
 <div class="bottom-bar">
   <div onclick="showPage('dashboardPage')">🏠</div>
   <div onclick="showPage('pengajuanPage')">📋</div>
@@ -136,6 +154,7 @@ button{
 
 <script>
 
+// NAVIGASI
 function showPage(page){
   ["dashboardPage","pengajuanPage","riwayatPage","cairPage","profilPage","notifPage"]
   .forEach(p=>document.getElementById(p).style.display="none");
@@ -143,46 +162,59 @@ function showPage(page){
   document.getElementById(page).style.display="block";
 }
 
+// ANIMASI SALDO
+function animasiSaldo(target){
+  let el = document.getElementById("saldo");
+  let angka = 0;
+
+  let interval = setInterval(()=>{
+    angka += Math.ceil(target/30);
+
+    if(angka >= target){
+      angka = target;
+      clearInterval(interval);
+    }
+
+    el.innerText = "Rp " + angka.toLocaleString("id-ID");
+
+  },30);
+}
+
+// PROSES PINJAMAN
 function proses(){
 
   let hasil = document.getElementById("hasil");
 
-  hasil.innerHTML = "🚀 Memproses...";
-  new Audio("https://www.soundjay.com/mechanical/sounds/rocket-launch-01.mp3").play();
+  let gaji = parseInt(document.getElementById("gaji").value || 0);
+  let pinjam = parseInt(document.getElementById("pinjam").value || 0);
+  let bulan = parseInt(document.getElementById("bulan").value);
 
-  setTimeout(()=>{
+  let limit = gaji * 5;
+  let cicilan = pinjam / bulan;
 
-    let gaji = parseInt(document.getElementById("gaji").value || 0);
-    let pinjam = parseInt(document.getElementById("pinjam").value || 0);
-    let bulan = parseInt(document.getElementById("bulan").value);
+  let status = pinjam > limit ? "❌ Ditolak" : "✅ Disetujui";
 
-    let limit = gaji * 5;
-    let cicilan = pinjam / bulan;
+  hasil.innerHTML = `
+    <div class="card">
+      💰 Limit: Rp ${limit.toLocaleString("id-ID")}<br>
+      Cicilan: Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
+      Status: ${status}
+    </div>
+  `;
 
-    let status = pinjam > limit ? "❌ Ditolak" : "✅ Disetujui";
+  localStorage.setItem("nama", document.getElementById("nama").value);
+  localStorage.setItem("nik", document.getElementById("nik").value);
+  localStorage.setItem("limit", limit);
 
-    hasil.innerHTML = `
-      <div style="background:white;padding:15px;border-radius:12px;">
-        💰 Limit: Rp ${limit.toLocaleString("id-ID")}<br>
-        Cicilan: Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
-        Status: ${status}
-      </div>
-    `;
+  simpanRiwayat(pinjam,status);
+  tampilRiwayat();
 
-    localStorage.setItem("nama", document.getElementById("nama").value);
-    localStorage.setItem("nik", document.getElementById("nik").value);
-    localStorage.setItem("limit", limit);
+  notif("Pengajuan berhasil");
 
-    simpanRiwayat(pinjam,status);
-    tampilRiwayat();
-
-    notif("Pengajuan berhasil diproses");
-
-    loadData();
-
-  },1500);
+  loadData();
 }
 
+// RIWAYAT
 function simpanRiwayat(pinjam,status){
   let r = JSON.parse(localStorage.getItem("riwayat"))||[];
   r.push({pinjam,status});
@@ -193,27 +225,30 @@ function tampilRiwayat(){
   let r = JSON.parse(localStorage.getItem("riwayat"))||[];
   let html="";
   r.forEach(i=>{
-    html+=`<div style="background:white;margin-top:10px;padding:10px;border-radius:10px;">
+    html+=`<div class="card">
       Rp ${i.pinjam.toLocaleString("id-ID")} - ${i.status}
     </div>`;
   });
   document.getElementById("riwayatBox").innerHTML=html;
 }
 
+// NOTIF
 function notif(text){
   let n = document.getElementById("notifBox");
-  n.innerHTML = <div style="background:white;padding:10px;margin-top:10px;border-radius:10px;">${text}</div> + n.innerHTML;
+  n.innerHTML = <div class="card">${text}</div> + n.innerHTML;
 }
 
+// LOAD DATA
 function loadData(){
-  let nama = localStorage.getItem("nama")||"Nasabah";
-  let nik = localStorage.getItem("nik")||"-";
-  let limit = localStorage.getItem("limit")||0;
+  let nama = localStorage.getItem("nama") || "Nasabah";
+  let nik = localStorage.getItem("nik") || "-";
+  let limit = parseInt(localStorage.getItem("limit") || 0);
 
-  document.getElementById("namaUser").innerText=nama;
-  document.getElementById("limitUser").innerText="Rp "+parseInt(limit).toLocaleString("id-ID");
-  document.getElementById("profilNama").innerText=nama;
-  document.getElementById("profilNik").innerText=nik;
+  document.getElementById("namaUser").innerText = nama;
+  document.getElementById("profilNama").innerText = nama;
+  document.getElementById("profilNik").innerText = nik;
+
+  animasiSaldo(limit);
 }
 
 window.onload = loadData;
