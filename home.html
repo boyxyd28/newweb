@@ -281,9 +281,7 @@ function tampilRiwayat(){
 // NOTIF
 function notif(text){
   let n = document.getElementById("notifBox");
-  n.innerHTML = <div class="card">${text}</div> + n.innerHTML;
-}
-
+ n.innerHTML = '<div class="card">${text}</div>' + n.innerHTML;
 // LOAD DATA
 function loadData(){
   let nama = localStorage.getItem("nama") || "Nasabah";
@@ -298,9 +296,9 @@ function loadData(){
 }
 
 window.onload = loadData;
+</script>
 
 <script>
-
 function showPage(page){
 
   let pages = [
@@ -313,12 +311,15 @@ function showPage(page){
   ];
 
   pages.forEach(p=>{
-    let el = document.getElementById(p);
+  let el = document.getElementById(p);
+  if(el){
     el.classList.remove("show");
     el.classList.add("hide");
-  });
+  }
+});
 
   let target = document.getElementById(page);
+if(target){
   target.classList.remove("hide");
   target.classList.add("show");
 }
