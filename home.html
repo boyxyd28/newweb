@@ -9,57 +9,17 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
 body{
-  background: linear-gradient(to bottom,#f9a825,#f57c00);
+  background:linear-gradient(to bottom,#f9a825,#f57c00);
   padding:15px;
   padding-bottom:80px;
 }
 
-/* 🔥 EFEK TEKAN */
-button:active, .card:active, .bottom-bar div:active{
-  transform: scale(0.95);
-  opacity: 0.7;
-  transition: 0.1s;
-}
-}
-
-/* 🔥 TRANSISI PAGE */
+/* PAGE SYSTEM */
 .page{
-  position:absolute;
-  width:100%;
-  top:0;
-  left:0;
-  transition: all 0.3s ease;
+  display:none;
 }
-
-.hide{
-  transform: translateX(100%);
-  opacity: 0;
-}
-
-.show{
-  transform: translateX(0);
-  opacity: 1;
-}
-
-/* 🔥 RIPPLE */
-.ripple{
-  position: relative;
-  overflow: hidden;
-}
-
-.ripple span{
-  position:absolute;
-  border-radius:50%;
-  background:rgba(255,255,255,0.5);
-  transform:scale(0);
-  animation:ripple 0.5s linear;
-}
-
-@keyframes ripple{
-  to{
-    transform:scale(4);
-    opacity:0;
-  }
+.page.show{
+  display:block;
 }
 
 /* CARD */
@@ -67,15 +27,6 @@ button:active, .card:active, .bottom-bar div:active{
   background:white;
   padding:15px;
   border-radius:16px;
-  margin-top:10px;
-}
-
-/* INPUT */
-input,select{
-  width:100%;
-  border:none;
-  border-bottom:1px solid #ccc;
-  padding:10px 0;
   margin-top:10px;
 }
 
@@ -91,6 +42,15 @@ button{
   font-weight:bold;
 }
 
+/* INPUT */
+input,select{
+  width:100%;
+  border:none;
+  border-bottom:1px solid #ccc;
+  padding:10px 0;
+  margin-top:10px;
+}
+
 /* NAV */
 .bottom-bar{
   position:fixed;
@@ -102,6 +62,12 @@ button{
   background:white;
   padding:12px;
 }
+
+/* EFFECT */
+button:active, .card:active, .bottom-bar div:active{
+  transform:scale(0.95);
+  opacity:0.7;
+}
 </style>
 </head>
 
@@ -109,20 +75,13 @@ button{
 
 <!-- DASHBOARD -->
 <div id="dashboardPage" class="page show">
-  <div style="
-    background:linear-gradient(to right,#f59e0b,#f97316);
-    padding:20px;
-    border-radius:20px;
-    color:white;
-  ">
+  <div style="background:linear-gradient(to right,#f59e0b,#f97316);padding:20px;border-radius:20px;color:white;">
     <div>Selamat datang 👋</div>
-    <div id="namaUser" style="font-weight:bold;">Nasabah</div>
-
+    <div id="namaUser"><b>Nasabah</b></div>
     <div style="margin-top:10px;">Saldo Anda</div>
     <div id="saldo" style="font-size:26px;font-weight:bold;">Rp 0</div>
   </div>
 
-  <!-- QUICK MENU -->
   <div style="margin-top:15px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
     <div onclick="showPage('pengajuanPage')" class="card">💰<br><small>Pinjam</small></div>
     <div onclick="showPage('riwayatPage')" class="card">🧾<br><small>Riwayat</small></div>
@@ -130,17 +89,15 @@ button{
     <div onclick="showPage('profilPage')" class="card">👤<br><small>Profil</small></div>
   </div>
 
-  <!-- INFO -->
   <div class="card">⚡ Proses cepat 5 menit</div>
   <div class="card">🔒 Data aman & terenkripsi</div>
-  <div class="card" style="background:linear-gradient(to right,#f59e0b,#f97316); color:white;">
+  <div class="card" style="background:linear-gradient(to right,#f59e0b,#f97316);color:white;">
     🔥 Limit hingga 50 juta
   </div>
-
 </div>
 
 <!-- PENGAJUAN -->
-<div id="pengajuanPage" class="page hide">
+<div id="pengajuanPage" class="page">
   <div class="card">
     <h3>Pengajuan Pinjaman</h3>
 
@@ -156,19 +113,18 @@ button{
     </select>
 
     <button onclick="proses()">Ajukan</button>
-
     <div id="hasil"></div>
   </div>
 </div>
 
 <!-- RIWAYAT -->
-<div id="riwayatPage" class="page hide" style="padding:10px;">
+<div id="riwayatPage" class="page">
   <h3>🧾 Riwayat</h3>
   <div id="riwayatBox"></div>
 </div>
 
-<!-- PENCAIRAN -->
-<div id="cairPage" class="page hide" style="padding:10px;">
+<!-- CAIR -->
+<div id="cairPage" class="page">
   <h3>💸 Pencairan</h3>
   <input placeholder="Nama Bank">
   <input placeholder="Nomor Rekening">
@@ -177,14 +133,15 @@ button{
 </div>
 
 <!-- PROFIL -->
-<div id="profilPage" class="page hide" style="padding:10px;">
+<div id="profilPage" class="page">
   <h3>👤 Profil</h3>
   Nama: <span id="profilNama"></span><br>
   NIK: <span id="profilNik"></span>
 </div>
 
 <!-- NOTIF -->
-<div id="notifPage" class="page hide" style="padding:10px;">
+<div id="notifPage" class="page">
+  <h3>🔔 Notifikasi</h3>
   <div id="notifBox"></div>
 </div>
 
@@ -199,47 +156,30 @@ button{
 </div>
 
 <script>
-
-// NAVIGASI
-
-  document.getElementById(page).style.display="block";
+// NAV
+function showPage(page){
+  let pages = ["dashboardPage","pengajuanPage","riwayatPage","cairPage","profilPage","notifPage"];
+  pages.forEach(p=>{
+    let el = document.getElementById(p);
+    if(el) el.classList.remove("show");
+  });
+  let target = document.getElementById(page);
+  if(target) target.classList.add("show");
 }
 
-// ANIMASI SALDO
-function animasiSaldo(target){
-  let el = document.getElementById("saldo");
-  let angka = 0;
-
-  let interval = setInterval(()=>{
-    angka += Math.ceil(target/30);
-
-    if(angka >= target){
-      angka = target;
-      clearInterval(interval);
-    }
-
-    el.innerText = "Rp " + angka.toLocaleString("id-ID");
-
-  },30);
-}
-
-// PROSES PINJAMAN
+// PROSES
 function proses(){
-
-  let hasil = document.getElementById("hasil");
-
   let gaji = parseInt(document.getElementById("gaji").value || 0);
   let pinjam = parseInt(document.getElementById("pinjam").value || 0);
   let bulan = parseInt(document.getElementById("bulan").value);
 
   let limit = gaji * 5;
   let cicilan = pinjam / bulan;
-
   let status = pinjam > limit ? "❌ Ditolak" : "✅ Disetujui";
 
-  hasil.innerHTML = `
+  document.getElementById("hasil").innerHTML = `
     <div class="card">
-      💰 Limit: Rp ${limit.toLocaleString("id-ID")}<br>
+      Limit: Rp ${limit.toLocaleString("id-ID")}<br>
       Cicilan: Rp ${Math.floor(cicilan).toLocaleString("id-ID")}<br>
       Status: ${status}
     </div>
@@ -249,36 +189,16 @@ function proses(){
   localStorage.setItem("nik", document.getElementById("nik").value);
   localStorage.setItem("limit", limit);
 
-  simpanRiwayat(pinjam,status);
-  tampilRiwayat();
-
   notif("Pengajuan berhasil");
-
   loadData();
-}
-
-// RIWAYAT
-function simpanRiwayat(pinjam,status){
-  let r = JSON.parse(localStorage.getItem("riwayat"))||[];
-  r.push({pinjam,status});
-  localStorage.setItem("riwayat",JSON.stringify(r));
-}
-
-function tampilRiwayat(){
-  let r = JSON.parse(localStorage.getItem("riwayat"))||[];
-  let html="";
-  r.forEach(i=>{
-    html+=`<div class="card">
-      Rp ${i.pinjam.toLocaleString("id-ID")} - ${i.status}
-    </div>`;
-  });
-  document.getElementById("riwayatBox").innerHTML=html;
 }
 
 // NOTIF
 function notif(text){
   let n = document.getElementById("notifBox");
- n.innerHTML = '<div class="card">${text}</div>' + n.innerHTML;
+  n.innerHTML = <div class="card">${text}</div> + n.innerHTML;
+}
+
 // LOAD DATA
 function loadData(){
   let nama = localStorage.getItem("nama") || "Nasabah";
@@ -288,39 +208,10 @@ function loadData(){
   document.getElementById("namaUser").innerText = nama;
   document.getElementById("profilNama").innerText = nama;
   document.getElementById("profilNik").innerText = nik;
-
-  animasiSaldo(limit);
+  document.getElementById("saldo").innerText = "Rp " + limit.toLocaleString("id-ID");
 }
 
 window.onload = loadData;
-</script>
-
-<script>
-function showPage(page){
-
-  let pages = [
-    "dashboardPage",
-    "pengajuanPage",
-    "riwayatPage",
-    "cairPage",
-    "profilPage",
-    "notifPage"
-  ];
-
-  pages.forEach(p=>{
-  let el = document.getElementById(p);
-  if(el){
-    el.classList.remove("show");
-    el.classList.add("hide");
-  }
-});
-
-  let target = document.getElementById(page);
-if(target){
-  target.classList.remove("hide");
-  target.classList.add("show");
-}
-
 </script>
 
 </body>
