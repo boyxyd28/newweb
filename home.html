@@ -9,11 +9,17 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
 body{
- /* 🔥 EFEK TEKAN */
+  background: linear-gradient(to bottom,#f9a825,#f57c00);
+  padding:15px;
+  padding-bottom:80px;
+}
+
+/* 🔥 EFEK TEKAN */
 button:active, .card:active, .bottom-bar div:active{
   transform: scale(0.95);
   opacity: 0.7;
   transition: 0.1s;
+}
 }
 
 /* 🔥 TRANSISI PAGE */
@@ -134,7 +140,7 @@ button{
 </div>
 
 <!-- PENGAJUAN -->
-<div id="pengajuanPage" style="display:none;">
+<div id="pengajuanPage" class="page hide">
   <div class="card">
     <h3>Pengajuan Pinjaman</h3>
 
@@ -156,13 +162,13 @@ button{
 </div>
 
 <!-- RIWAYAT -->
-<div id="riwayatPage" style="display:none; padding:10px;">
+<div id="riwayatPage" class="page hide" style="padding:10px;">
   <h3>🧾 Riwayat</h3>
   <div id="riwayatBox"></div>
 </div>
 
 <!-- PENCAIRAN -->
-<div id="cairPage" style="display:none; padding:10px;">
+<div id="cairPage" class="page hide" style="padding:10px;">
   <h3>💸 Pencairan</h3>
   <input placeholder="Nama Bank">
   <input placeholder="Nomor Rekening">
@@ -171,15 +177,14 @@ button{
 </div>
 
 <!-- PROFIL -->
-<div id="profilPage" style="display:none; padding:10px;">
+<div id="profilPage" class="page hide" style="padding:10px;">
   <h3>👤 Profil</h3>
   Nama: <span id="profilNama"></span><br>
   NIK: <span id="profilNik"></span>
 </div>
 
 <!-- NOTIF -->
-<div id="notifPage" style="display:none; padding:10px;">
-  <h3>🔔 Notifikasi</h3>
+<div id="notifPage" class="page hide" style="padding:10px;">
   <div id="notifBox"></div>
 </div>
 
@@ -293,6 +298,30 @@ function loadData(){
 }
 
 window.onload = loadData;
+
+<script>
+
+function showPage(page){
+
+  let pages = [
+    "dashboardPage",
+    "pengajuanPage",
+    "riwayatPage",
+    "cairPage",
+    "profilPage",
+    "notifPage"
+  ];
+
+  pages.forEach(p=>{
+    let el = document.getElementById(p);
+    el.classList.remove("show");
+    el.classList.add("hide");
+  });
+
+  let target = document.getElementById(page);
+  target.classList.remove("hide");
+  target.classList.add("show");
+}
 
 </script>
 
