@@ -7,7 +7,26 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+/* ANIMASI PAGE */
+.page{
+  display:none;
+  animation: fade 0.3s ease;
+}
 
+.show{
+  display:block;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateX(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
+}
 body{
   background:linear-gradient(to bottom,#f9a825,#f57c00);
   padding:15px;
